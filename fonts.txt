@@ -1,0 +1,12 @@
+Fonter
+1. A font style for headings and page titles
+2. A font style for main content areas
+3. A font style for quotes or subtitles (optional)
+
+https://fonts.google.com/specimen/Lato?query=lato
+Lato Regular 400
+
+https://www.fontshare.com/fonts/general-sans
+General Sans
+https://www.fontshare.com/fonts/satoshi
+Satoshi

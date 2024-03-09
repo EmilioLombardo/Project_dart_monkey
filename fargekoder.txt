@@ -1,0 +1,18 @@
+Template for sider
+
+Nablå #1045A6
+Header
+Footer
+
+Nablå lite ##DBEEFF
+Bakgrunnen
+Header tekst
+
+Forgrunnshvit #FFFFFF
+Forgrunn
+Logo
+
+Nablå skygge #051752
+
+Darkmode #061025
+Bakgrunnen
