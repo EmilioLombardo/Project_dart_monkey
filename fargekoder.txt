@@ -1,4 +1,6 @@
-Template for sider
+Farger for sider
+Burde også være godkjent her:
+https://webaim.org/resources/contrastchecker/
 
 Nablå #1045A6
 Header

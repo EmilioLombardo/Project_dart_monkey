@@ -5,6 +5,7 @@ Fonter
 
 https://fonts.google.com/specimen/Lato?query=lato
 Lato Regular 400
+Carlito
 
 https://www.fontshare.com/fonts/general-sans
 General Sans
