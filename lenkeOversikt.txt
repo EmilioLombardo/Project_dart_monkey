@@ -1,0 +1,28 @@
+default:
+https://nabla.no/
+abbr. 
+for forrige side= ..
+antall / indikerer hvor dypt man er i lenka
+* er unntak
+
+
+nye:
+../om/
+    /../styret/
+    /../stillingsbeskrivelser/
+    /../undergrupper/
+        *nabla.no/soknad/
+    /../tillitsvalgte/
+    /../lover-og-forskrifter/
+    /../fond/
+    /../kompedier/
+../arrangementer/
+    *kalender har lik som opprinnelse
+    *lister har lik som opprinnelse
+    *legg til arrangement har lik som opprinnelse
+../for-bedrifter/
+../ny-student/
+../profil/
+
+gamle vi må huske å få med:
+../stillinger/              #ledige stillinger

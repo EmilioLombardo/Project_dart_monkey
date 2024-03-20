@@ -1,0 +1,20 @@
+Farger for sider
+Burde også være godkjent her:
+https://webaim.org/resources/contrastchecker/
+
+Nablå #1045A6
+Header
+Footer
+
+Nablå lite ##DBEEFF
+Bakgrunnen
+Header tekst
+
+Forgrunnshvit #FFFFFF
+Forgrunn
+Logo
+
+Nablå skygge #051752
+
+Darkmode #061025
+Bakgrunnen
