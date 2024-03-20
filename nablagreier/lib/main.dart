@@ -14,29 +14,45 @@ class MyWebPage extends StatelessWidget {
             // This is the top image that will scroll away.
             SliverToBoxAdapter(
               child: Container(
-                height: MediaQuery.of(context).size.width * 2 / 5, // 2/5 of the screen width
+                height: MediaQuery.of(context).size.width * 1 / 3, // 2/5 of the screen width
                 decoration: const BoxDecoration(
-                  color: Color(0xFFDBEEFF), // Background color of the top part
+                  color: Color(0xFF061025), // Background color of the top part
                   image: DecorationImage(
                     image: AssetImage('images/nablabakgrunn.jpg'), // Background image
                     fit: BoxFit.cover,
+                    opacity: 0.7,
                   ),
                 ),
                 child: Stack(
                   children: <Widget>[
                     // Title with Custom Font
-                    const Positioned(
-                      top: 20, // Adjust the position based on your needs
+                    // ignore: prefer_const_constructors
+                    Positioned(
+                      top: 120, // Adjust the position based on your needs
                       left: 0,
                       right: 0,
                       child: Center(
-                        child: Text(
-                          'Nabla - Linjeforening for fysikk og matematikk',
-                          style: TextStyle(
-                            fontFamily: 'Satoshi', // Use your custom font
-                            fontSize: 24,
-                            color: Colors.white,
-                          ),
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                              'Nabla',
+                              style: TextStyle(
+                                fontFamily: 'Satoshi', // Use your custom font
+                                fontSize: 64,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white,
+                              ),
+                            ),
+                            Text(
+                              'Linjeforeningen for fysikk og matematikk',
+                              style: TextStyle(
+                                fontFamily: 'Satoshi', // Use your custom font
+                                fontSize: 28,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
