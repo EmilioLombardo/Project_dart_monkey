@@ -14,11 +14,11 @@ class MyWebPage extends StatelessWidget {
             // This is the top image that will scroll away.
             SliverToBoxAdapter(
               child: Container(
-                height: MediaQuery.of(context).size.height * 0.66, // 2/3 of the screen height
-                decoration: BoxDecoration(
-                  color: Colors.blue, // Background color of the top part
+                height: MediaQuery.of(context).size.width * 2/5, // 2/5 of the screen width
+                decoration: const BoxDecoration(
+                  color: Color(0xFFDBEEFF), // Background color of the top part
                   image: DecorationImage(
-                    image: AssetImage('path/to/your/image.jpg'), // Background image
+                    image: AssetImage('images/nablabakgrunn.jpg'), // Background image
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -30,7 +30,7 @@ class MyWebPage extends StatelessWidget {
                 minHeight: 60.0,
                 maxHeight: 60.0,
                 child: Container(
-                  color: Colors.grey[200], // Background color of the header
+                  color: Color(0xFF1045A6), // Background color of the header
                   child: Center(
                     child: Text(
                       'Sticky Header',
