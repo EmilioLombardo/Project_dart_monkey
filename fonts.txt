@@ -3,11 +3,13 @@ Fonter
 2. A font style for main content areas
 3. A font style for quotes or subtitles (optional)
 
-https://fonts.google.com/specimen/Lato?query=lato
-Lato Regular 400
+1. https://www.fontshare.com/fonts/satoshi
+Satoshi
+
+2. https://fonts.google.com/specimen/Carlito?query=Carlito
 Carlito
 
-https://www.fontshare.com/fonts/general-sans
-General Sans
-https://www.fontshare.com/fonts/satoshi
-Satoshi
+3. https://fonts.google.com/specimen/Lato?query=lato
+Lato Regular 400 
+
+
