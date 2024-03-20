@@ -14,13 +14,56 @@ class MyWebPage extends StatelessWidget {
             // This is the top image that will scroll away.
             SliverToBoxAdapter(
               child: Container(
-                height: MediaQuery.of(context).size.width * 2/5, // 2/5 of the screen width
+                height: MediaQuery.of(context).size.width * 2 / 5, // 2/5 of the screen width
                 decoration: const BoxDecoration(
                   color: Color(0xFFDBEEFF), // Background color of the top part
                   image: DecorationImage(
                     image: AssetImage('images/nablabakgrunn.jpg'), // Background image
                     fit: BoxFit.cover,
                   ),
+                ),
+                child: Stack(
+                  children: <Widget>[
+                    // Title with Custom Font
+                    const Positioned(
+                      top: 20, // Adjust the position based on your needs
+                      left: 0,
+                      right: 0,
+                      child: Center(
+                        child: Text(
+                          'Nabla - Linjeforening for fysikk og matematikk',
+                          style: TextStyle(
+                            fontFamily: 'Satoshi', // Use your custom font
+                            fontSize: 24,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                    // Login Feature (Sign up and Sign in buttons)
+                    Positioned(
+                      bottom: 20, // Adjust the position based on your needs
+                      left: 0,
+                      right: 0,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          ElevatedButton(
+                            onPressed: () {
+                              // Handle Sign Up
+                            },
+                            child: Text('Sign Up'),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              // Handle Sign In
+                            },
+                            child: Text('Sign In'),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
