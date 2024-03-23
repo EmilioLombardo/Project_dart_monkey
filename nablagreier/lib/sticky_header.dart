@@ -7,14 +7,19 @@ class StickyHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context); // Access the ThemeProvider
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    // Determine the current theme mode based on system settings
+    final isSystemDarkMode = MediaQuery.of(context).platformBrightness == Brightness.dark;
+    // Update your icon based on the system theme mode at runtime
+    final iconData = (themeProvider.themeMode == ThemeMode.system ? isSystemDarkMode : themeProvider.isDarkMode) ? Icons.light_mode : Icons.dark_mode;
+
     return SliverPersistentHeader(
       delegate: _StickyHeaderDelegate(
         minHeight: 60.0,
         maxHeight: 60.0,
         child: Container(
-          color: const Color(0xFF1045A6), // Background color of the header
-          padding: const EdgeInsets.only(right: 16.0), // Add some padding on the right
+          color: Color(0xFF1045A6), // Background color of the header
+          padding: EdgeInsets.only(right: 16.0), // Add some padding on the right
           alignment: Alignment.centerRight, // Align the column to the right
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end, // Align text to the right
@@ -40,10 +45,15 @@ class StickyHeader extends StatelessWidget {
               ),
               const SizedBox(width: 30), // Spacing between text widgets
               IconButton(
-                icon: Icon(themeProvider.isDarkMode ? Icons.light_mode : Icons.dark_mode),
+                icon: Icon(iconData),
                 color: Colors.white,
                 onPressed: () {
-                  themeProvider.toggleTheme(!themeProvider.isDarkMode);
+                  // If system, toggle based on current system mode, else toggle normally
+                  if (themeProvider.themeMode == ThemeMode.system) {
+                    themeProvider.toggleTheme(!isSystemDarkMode);
+                  } else {
+                    themeProvider.toggleTheme(!themeProvider.isDarkMode);
+                  }
                 },
               ),
               const SizedBox(width: 15), // Spacing between text widgets

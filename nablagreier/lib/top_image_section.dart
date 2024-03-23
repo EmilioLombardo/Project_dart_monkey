@@ -5,7 +5,8 @@ class TopImageSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SliverToBoxAdapter(
+      child: Container(
       height: MediaQuery.of(context).size.width * 1 / 3, // 2/5 of the screen width
       decoration: const BoxDecoration(
         color: Color(0xFF061025), // Background color of the top part
@@ -99,6 +100,7 @@ class TopImageSection extends StatelessWidget {
             ),
           ),
         ],
+      ),
       ),
     );
   }

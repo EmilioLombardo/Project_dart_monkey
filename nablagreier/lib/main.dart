@@ -27,9 +27,7 @@ class MyWebPage extends StatelessWidget {
         body: CustomScrollView(
           slivers: <Widget>[
             
-            SliverToBoxAdapter(
-              child: TopImageSection(),         // This is the top image that will scroll away.
-            ),
+            TopImageSection(),         // This is the top image that will scroll away.
             
             StickyHeader(),                     // Sticky header that remains visible as you scroll
             
@@ -41,7 +39,6 @@ class MyWebPage extends StatelessWidget {
                 childCount: 30, // Number of list items
               ),
             ),
-
           ],
         ),
       ),
