@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'theme_provider.dart';
 import 'top_image_section.dart'; 
 import 'sticky_header.dart';
-
+import 'kommende_arrangement.dart';
 
 void main() {
   runApp(
@@ -31,6 +31,11 @@ class MyWebPage extends StatelessWidget {
             
             StickyHeader(),                     // Sticky header that remains visible as you scroll
             
+            SliverPadding(
+              padding: EdgeInsets.only(top: 80),
+            ),
+            
+            KommendeArrangement(),
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 (context, index) => ListTile(
