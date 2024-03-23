@@ -36,14 +36,7 @@ class MyWebPage extends StatelessWidget {
             ),
             
             KommendeArrangement(),
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) => ListTile(
-                  title: Text('Item #$index'),
-                ),
-                childCount: 30, // Number of list items
-              ),
-            ),
+            
           ],
         ),
       ),
