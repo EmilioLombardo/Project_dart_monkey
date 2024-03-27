@@ -7,7 +7,7 @@ class TopImageSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: Container(
-      height: MediaQuery.of(context).size.width * 1 / 3, // 2/5 of the screen width
+      height: MediaQuery.of(context).size.width * 1 / 3, // 1/3 of the screen width
       decoration: const BoxDecoration(
         color: Color(0xFF061025), // Background color of the top part
         image: DecorationImage(
@@ -19,7 +19,7 @@ class TopImageSection extends StatelessWidget {
       child: Stack(
         children: <Widget>[
           Positioned(
-            top: MediaQuery.of(context).size.width * 1 / 7, // Adjust the position based on your needs
+            top: MediaQuery.of(context).size.width * 1 / 10, // Adjust the position based on your needs
             left: 0,
             right: 0,
             child: Center(
