@@ -1,4 +1,6 @@
+//sticky_header.dart
 import 'package:flutter/material.dart';
+import 'package:nablagreier/app_colors.dart';
 import 'package:provider/provider.dart';
 import 'theme_provider.dart';
 
@@ -8,9 +10,9 @@ class StickyHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
-    // Determine the current theme mode based on system settings
+
     final isSystemDarkMode = MediaQuery.of(context).platformBrightness == Brightness.dark;
-    // Update your icon based on the system theme mode at runtime
+
     final iconData = (themeProvider.themeMode == ThemeMode.system ? isSystemDarkMode : themeProvider.isDarkMode) ? Icons.light_mode : Icons.dark_mode;
 
     return SliverPersistentHeader(
@@ -18,7 +20,7 @@ class StickyHeader extends StatelessWidget {
         minHeight: 60.0,
         maxHeight: 60.0,
         child: Container(
-          color: Color(0xFF1045A6), // Background color of the header
+          color: WebColors.nablaBlue, // Background color of the header
           padding: EdgeInsets.only(right: 16.0), // Add some padding on the right
           alignment: Alignment.centerRight, // Align the column to the right
           child: Row(

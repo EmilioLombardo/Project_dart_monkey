@@ -5,10 +5,15 @@ https://webaim.org/resources/contrastchecker/
 Nablå #1045A6
 Header
 Footer
+Nye forslag:
+
 
 Nablå lite ##DBEEFF
 Bakgrunnen
 Header tekst
+
+Darkmode #061025
+Bakgrunnen
 
 Forgrunnshvit #FFFFFF
 Forgrunn
@@ -16,5 +21,3 @@ Logo
 
 Nablå skygge #051752
 
-Darkmode #061025
-Bakgrunnen
