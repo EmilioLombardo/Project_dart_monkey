@@ -1,8 +1,6 @@
 //top_image_section.dart
 import 'package:flutter/material.dart';
 import 'package:nablagreier/app_colors.dart';
-import 'package:provider/provider.dart';
-import 'theme_provider.dart'; 
 
 class TopImageSection extends StatelessWidget {
   const TopImageSection({Key? key}) : super(key: key);
