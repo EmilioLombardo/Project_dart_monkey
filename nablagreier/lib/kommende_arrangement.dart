@@ -27,7 +27,7 @@ class KommendeArrangement extends StatelessWidget {
                 decoration: const BoxDecoration(
                   color: WebColors.darkBackgroundColor,
                   image: DecorationImage(
-                    image: AssetImage('images/PlaceHolder.jpg'), 
+                    image: AssetImage('images/placeholder.jpg'), 
                     fit: BoxFit.cover,
                     opacity: 1.0,
                   ),
