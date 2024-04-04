@@ -51,6 +51,9 @@ class MyWebPage extends StatelessWidget {
               padding: EdgeInsets.only(top: 50),
             ),
             NyesteNabladet(),
+            SliverPadding(
+              padding: EdgeInsets.only(top: 100),
+            ),
             /*
             SliverToBoxAdapter(
             child: Center(
