@@ -1,3 +1,4 @@
+// kommende_arrangement.dart
 import 'package:flutter/material.dart';
 
 class KommendeArrangement extends StatelessWidget {
@@ -10,9 +11,8 @@ class KommendeArrangement extends StatelessWidget {
     return SliverToBoxAdapter(
       child: Center( // Centering the Container to restrict its width.
         child: Container(
-          height: MediaQuery.of(context).size.width * 1 / 5, // 1/3 of the screen width
+          height: MediaQuery.of(context).size.width * 1 / 5, // 1/5 of the screen width
           width: MediaQuery.of(context).size.width * 4 / 5,
-          
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
@@ -48,13 +48,23 @@ class KommendeArrangement extends StatelessWidget {
                 child: Row(
                   children: <Widget>[
                     OutlinedButton(
-                      style: OutlinedButton.styleFrom( // Sign up button styling
-                        minimumSize: Size(MediaQuery.of(context).size.width / 20, MediaQuery.of(context).size.width / 30),
-                        side: BorderSide(color: Color(0xF0FFFFFF), width: 2.0),
-                        foregroundColor: Color(0xFF1045A6),
-                        backgroundColor: Color(0x40FFFFFF),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(1.0),
+                      style: ButtonStyle(
+                        minimumSize: MaterialStateProperty.all<Size>(
+                          Size(MediaQuery.of(context).size.width / 20, MediaQuery.of(context).size.width / 30),
+                        ),
+                        side: MaterialStateProperty.all<BorderSide>(
+                          BorderSide(color: Color(0xF0FFFFFF), width: 2.0),
+                        ),
+                        foregroundColor: MaterialStateProperty.all<Color>(
+                          Color(0xFF1045A6),
+                        ),
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                          Color(0x40FFFFFF),
+                        ),
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(1.0),
+                          ),
                         ),
                       ),
                       onPressed: () {
@@ -72,12 +82,20 @@ class KommendeArrangement extends StatelessWidget {
                     ),
                     SizedBox(width: MediaQuery.of(context).size.width / 20),
                     ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: Size(MediaQuery.of(context).size.width / 20, MediaQuery.of(context).size.width / 30),
-                        foregroundColor: Color(0xFFDBEEFF),
-                        backgroundColor: Color(0xFF1045A6),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(1.0),
+                      style: ButtonStyle(
+                        minimumSize: MaterialStateProperty.all<Size>(
+                          Size(MediaQuery.of(context).size.width / 20, MediaQuery.of(context).size.width / 30),
+                        ),
+                        foregroundColor: MaterialStateProperty.all<Color>(
+                          Color(0xFFDBEEFF),
+                        ),
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                          Color(0xFF1045A6),
+                        ),
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(1.0),
+                          ),
                         ),
                       ),
                       onPressed: () {
