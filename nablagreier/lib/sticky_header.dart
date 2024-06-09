@@ -3,15 +3,18 @@ import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'theme_provider.dart';
 
-class StickyHeader extends StatelessWidget {
+class StickyHeader extends StatefulWidget {
   const StickyHeader({Key? key}) : super(key: key);
 
   @override
+  _StickyHeaderState createState() => _StickyHeaderState();
+}
+
+class _StickyHeaderState extends State<StickyHeader> {
+  @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
-    // Determine the current theme mode based on system settings
     final isSystemDarkMode = MediaQuery.of(context).platformBrightness == Brightness.dark;
-    // Update your icon based on the system theme mode at runtime
     final iconData = (themeProvider.themeMode == ThemeMode.system ? isSystemDarkMode : themeProvider.isDarkMode) ? Icons.light_mode : Icons.dark_mode;
 
     return SliverPersistentHeader(
@@ -19,61 +22,64 @@ class StickyHeader extends StatelessWidget {
         minHeight: 60.0,
         maxHeight: 60.0,
         child: Container(
-          color: const Color(0xFF1045A6), // Background color of the header
-          padding: const EdgeInsets.only(right: 16.0), // Add some padding on the right
-          alignment: Alignment.centerRight, // Align the column to the right
+          color: const Color(0xFF1045A6),
+          padding: const EdgeInsets.only(right: 16.0),
+          alignment: Alignment.centerRight,
           child: StreamBuilder<User?>(
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (context, snapshot) {
-              final User? user = snapshot.data; // Get the current user
+              final User? user = snapshot.data;
               return Row(
-                mainAxisAlignment: MainAxisAlignment.end, // Align text to the right
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   InkWell(
-                    onTap: () {
-                      // Navigate to 'Om Nabla' page
-                    },
+                    onTap: () {},
                     child: const Text(
                       'Om Nabla',
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                   ),
-                  const SizedBox(width: 30), // Spacing between text widgets
+                  const SizedBox(width: 30),
                   InkWell(
-                    onTap: () {
-                      // Navigate to 'Arrangementer' page
-                    },
+                    onTap: () {},
                     child: const Text(
                       'Arrangementer',
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                   ),
-                  const SizedBox(width: 30), // Spacing between text widgets
+                  const SizedBox(width: 30),
                   InkWell(
-                    onTap: () {
-                      // Navigate to 'For bedrifter' page
-                    },
+                    onTap: () {},
                     child: const Text(
                       'For bedrifter',
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                   ),
-                  const SizedBox(width: 30), // Spacing between text widgets
+                  const SizedBox(width: 30),
                   InkWell(
-                    onTap: () {
-                      // Navigate to 'Ny student?' page
-                    },
+                    onTap: () {},
                     child: const Text(
                       'Ny student?',
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                   ),
-                  const SizedBox(width: 30), // Spacing between text widgets
+                  const SizedBox(width: 30),
+                  if (user != null) ...[
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, '/admin'); // Navigate to admin page
+                      },
+                      child: const Text(
+                        'Admin',
+                        style: TextStyle(fontSize: 18, color: Colors.white),
+                      ),
+                    ),
+                    const SizedBox(width: 30),
+                  ],
                   IconButton(
                     icon: Icon(iconData),
                     color: Colors.white,
                     onPressed: () {
-                      // If system, toggle based on current system mode, else toggle normally
                       if (themeProvider.themeMode == ThemeMode.system) {
                         themeProvider.toggleTheme(!isSystemDarkMode);
                       } else {
@@ -81,15 +87,13 @@ class StickyHeader extends StatelessWidget {
                       }
                     },
                   ),
-                  const SizedBox(width: 15), // Spacing between text widgets
+                  const SizedBox(width: 15),
                   if (user != null) ...[
                     InkWell(
-                      onTap: () {
-                        // Handle the profile icon tap
-                      },
-                      child: const Icon(Icons.account_circle, size: 30.0, color: Colors.white), // Profile icon
+                      onTap: () {},
+                      child: const Icon(Icons.account_circle, size: 30.0, color: Colors.white),
                     ),
-                    const SizedBox(width: 15), // Spacing between text widgets
+                    const SizedBox(width: 15),
                     InkWell(
                       onTap: () async {
                         await FirebaseAuth.instance.signOut();
@@ -139,7 +143,7 @@ class _StickyHeaderDelegate extends SliverPersistentHeaderDelegate {
   @override
   bool shouldRebuild(_StickyHeaderDelegate oldDelegate) {
     return minHeight != oldDelegate.minHeight ||
-           maxHeight != oldDelegate.maxHeight ||
-           child != oldDelegate.child;
+        maxHeight != oldDelegate.maxHeight ||
+        child != oldDelegate.child;
   }
 }

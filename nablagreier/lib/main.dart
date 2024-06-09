@@ -7,14 +7,15 @@ import 'sticky_header.dart';
 import 'kommende_arrangement.dart';
 import 'flere_arrangementer.dart';
 import 'login.dart';
-import 'register.dart'; // Import the register page
-import 'firebase_options.dart'; // Import Firebase options
+import 'register.dart';
+import 'admin.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-  ); // Initialize Firebase with options
+  );
   runApp(
     ChangeNotifierProvider(
       create: (context) => ThemeProvider(),
@@ -30,14 +31,15 @@ class MyWebPage extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.light(), // Define light theme
-      darkTheme: ThemeData.dark(), // Define dark theme
-      themeMode: themeProvider.themeMode, // Use the theme from the provider
+      theme: ThemeData.light(),
+      darkTheme: ThemeData.dark(),
+      themeMode: themeProvider.themeMode,
       initialRoute: '/',
       routes: {
-        '/': (context) => HomePage(), // Define the home page
-        '/login': (context) => LoginPage(), // Define the login page route
-        '/register': (context) => RegisterPage(), // Define the register page route
+        '/': (context) => HomePage(),
+        '/login': (context) => LoginPage(),
+        '/register': (context) => RegisterPage(),
+        '/admin': (context) => AdminPage(),
       },
     );
   }
@@ -49,8 +51,8 @@ class HomePage extends StatelessWidget {
     return const Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
-          StickyHeader(), // Sticky header that remains visible as you scroll
-          TopImageSection(), // This is the top image that will scroll away.
+          StickyHeader(),
+          TopImageSection(),
           SliverPadding(padding: EdgeInsets.only(top: 80)),
           KommendeArrangement(),
           SliverPadding(padding: EdgeInsets.only(top: 80)),
