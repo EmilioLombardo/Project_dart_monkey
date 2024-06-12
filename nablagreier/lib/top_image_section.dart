@@ -28,23 +28,13 @@ class TopImageSection extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       'Nabla',
-                      style: TextStyle(
-                        fontFamily: 'Satoshi',
-                        fontSize: MediaQuery.of(context).size.width / 40,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white,
-                      ),
+                      style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w600 ,fontSize: 56, color: Colors.white),
                     ),
                     Text(
                       'Linjeforeningen for fysikk og matematikk',
-                      style: TextStyle(
-                        fontFamily: 'Satoshi', // font
-                        fontSize: MediaQuery.of(context).size.width / 60,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white,
-                      ),
+                      style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w400 ,fontSize: 24, color: Colors.white),
                     ),
-                    SizedBox(height: MediaQuery.of(context).size.width / 60),
+                    SizedBox(height: 40),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
@@ -54,13 +44,13 @@ class TopImageSection extends StatelessWidget {
                               Size(MediaQuery.of(context).size.width / 20, MediaQuery.of(context).size.width / 30),
                             ),
                             side: MaterialStateProperty.all<BorderSide>(
-                              const BorderSide(color: Color(0xF0FFFFFF), width: 2.0),
+                              const BorderSide(color: Color.fromARGB(0, 0, 0, 0), width: 2.0),
                             ),
                             foregroundColor: MaterialStateProperty.all<Color>(
                               const Color(0xFF1045A6),
                             ),
                             backgroundColor: MaterialStateProperty.all<Color>(
-                              const Color(0x40FFFFFF),
+                              Color.fromARGB(0, 255, 255, 255),
                             ),
                             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                               RoundedRectangleBorder(
@@ -73,15 +63,10 @@ class TopImageSection extends StatelessWidget {
                           },
                           child: const Text(
                             'Registrer deg',
-                            style: TextStyle(
-                              color: Color(0xFFFFFFFF),
-                              fontFamily: 'Lato',
-                              fontWeight: FontWeight.w500,
-                              fontSize: 12,
-                            ),
+                            style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w700 ,fontSize: 20, color: Color.fromARGB(255, 255, 255, 255)),
                           ),
                         ),
-                        SizedBox(width: MediaQuery.of(context).size.width / 20),
+                        SizedBox(width: 40),
                         ElevatedButton(
                           style: ButtonStyle(
                             minimumSize: MaterialStateProperty.all<Size>(
@@ -104,12 +89,7 @@ class TopImageSection extends StatelessWidget {
                           },
                           child: const Text(
                             'Logg inn',
-                            style: TextStyle(
-                              color: Color(0xFFFFFFFF),
-                              fontFamily: 'Lato',
-                              fontWeight: FontWeight.w500,
-                              fontSize: 12,
-                            ),
+                            style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w700 ,fontSize: 20, color: Color.fromARGB(255, 255, 255, 255)),
                           ),
                         ),
                       ],
