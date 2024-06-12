@@ -20,7 +20,7 @@ class TopImageSection extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             Positioned(
-              top: MediaQuery.of(context).size.width * 1 / 10, // Adjust the position based on your needs
+              top: 100, // Adjust the position based on your needs
               left: 0,
               right: 0,
               child: Center(
@@ -32,7 +32,7 @@ class TopImageSection extends StatelessWidget {
                     ),
                     Text(
                       'Linjeforeningen for fysikk og matematikk',
-                      style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w400 ,fontSize: 24, color: Colors.white),
+                      style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w300 ,fontSize: 24, color: Colors.white),
                     ),
                     SizedBox(height: 40),
                     Row(
@@ -40,21 +40,19 @@ class TopImageSection extends StatelessWidget {
                       children: <Widget>[
                         OutlinedButton(
                           style: ButtonStyle(
-                            minimumSize: MaterialStateProperty.all<Size>(
-                              Size(MediaQuery.of(context).size.width / 20, MediaQuery.of(context).size.width / 30),
-                            ),
                             side: MaterialStateProperty.all<BorderSide>(
-                              const BorderSide(color: Color.fromARGB(0, 0, 0, 0), width: 2.0),
+                              const BorderSide(color: Color(0xFFFFFFFF), width: 2.0),
                             ),
                             foregroundColor: MaterialStateProperty.all<Color>(
-                              const Color(0xFF1045A6),
+                              const Color(0xFFDBEEFF),
                             ),
                             backgroundColor: MaterialStateProperty.all<Color>(
-                              Color.fromARGB(0, 255, 255, 255),
+                              Color(0x00000000),
                             ),
+                            padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(18)),
                             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                               RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(1.0),
+                                borderRadius: BorderRadius.circular(30.0),
                               ),
                             ),
                           ),
@@ -63,24 +61,22 @@ class TopImageSection extends StatelessWidget {
                           },
                           child: const Text(
                             'Registrer deg',
-                            style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w700 ,fontSize: 20, color: Color.fromARGB(255, 255, 255, 255)),
+                            style: TextStyle(shadows: <Shadow>[Shadow(offset: Offset(0.0, 0.0), blurRadius: 3.0, color: Color(0xFF061025),),], fontFamily: 'Lato', fontWeight: FontWeight.w700 ,fontSize: 18, color: Color(0xFFFFFFFF)),
                           ),
                         ),
                         SizedBox(width: 40),
                         ElevatedButton(
                           style: ButtonStyle(
-                            minimumSize: MaterialStateProperty.all<Size>(
-                              Size(MediaQuery.of(context).size.width / 20, MediaQuery.of(context).size.width / 30),
-                            ),
                             foregroundColor: MaterialStateProperty.all<Color>(
                               const Color(0xFFDBEEFF),
                             ),
                             backgroundColor: MaterialStateProperty.all<Color>(
                               const Color(0xFF1045A6),
                             ),
+                            padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(18)),
                             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                               RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(1.0),
+                                borderRadius: BorderRadius.circular(30.0),
                               ),
                             ),
                           ),
@@ -89,7 +85,7 @@ class TopImageSection extends StatelessWidget {
                           },
                           child: const Text(
                             'Logg inn',
-                            style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w700 ,fontSize: 20, color: Color.fromARGB(255, 255, 255, 255)),
+                            style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w700 ,fontSize: 18, color: Color(0xFFFFFFFF)),
                           ),
                         ),
                       ],
