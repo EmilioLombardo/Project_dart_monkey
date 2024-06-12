@@ -1,4 +1,4 @@
-//top_image_section.dart
+// top_image_section.dart
 import 'package:flutter/material.dart';
 import 'package:nablagreier/app_colors.dart';
 
@@ -11,11 +11,11 @@ class TopImageSection extends StatelessWidget {
       child: Container(
         height: MediaQuery.of(context).size.width * 1 / 3, // 1/3 of the screen width
         decoration: const BoxDecoration(
-          color: WebColors.darkBackgroundColor, // Background color of the top part
+          color: Color(0xFF061025), // Background color of the top part
           image: DecorationImage(
             image: AssetImage('images/nablabakgrunn.jpg'), // Background image
             fit: BoxFit.cover,
-            opacity: 0.8,
+            opacity: 0.7,
           ),
         ),
         child: Stack(
@@ -50,17 +50,27 @@ class TopImageSection extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         OutlinedButton(
-                          style: OutlinedButton.styleFrom( // Sign up button styling
-                            minimumSize: Size(MediaQuery.of(context).size.width / 20, MediaQuery.of(context).size.width / 30),
-                            side: BorderSide(color: Color(0xF0FFFFFF), width: 2.0),
-                            foregroundColor: Color(0xFF1045A6),
-                            backgroundColor: Color(0x40FFFFFF),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(1.0),
+                          style: ButtonStyle(
+                            minimumSize: MaterialStateProperty.all<Size>(
+                              Size(MediaQuery.of(context).size.width / 20, MediaQuery.of(context).size.width / 30),
+                            ),
+                            side: MaterialStateProperty.all<BorderSide>(
+                              const BorderSide(color: Color(0xF0FFFFFF), width: 2.0),
+                            ),
+                            foregroundColor: MaterialStateProperty.all<Color>(
+                              const Color(0xFF1045A6),
+                            ),
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                              const Color(0x40FFFFFF),
+                            ),
+                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(1.0),
+                              ),
                             ),
                           ),
                           onPressed: () {
-                            // Handle Sign Up
+                            Navigator.pushNamed(context, '/register'); // Navigate to the register page
                           },
                           child: const Text(
                             'Registrer deg',
@@ -74,16 +84,24 @@ class TopImageSection extends StatelessWidget {
                         ),
                         SizedBox(width: MediaQuery.of(context).size.width / 20),
                         ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            minimumSize: Size(MediaQuery.of(context).size.width / 20, MediaQuery.of(context).size.width / 30),
-                            foregroundColor: Color(0xFFDBEEFF),
-                            backgroundColor: Color(0xFF1045A6),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(1.0),
+                          style: ButtonStyle(
+                            minimumSize: MaterialStateProperty.all<Size>(
+                              Size(MediaQuery.of(context).size.width / 20, MediaQuery.of(context).size.width / 30),
+                            ),
+                            foregroundColor: MaterialStateProperty.all<Color>(
+                              const Color(0xFFDBEEFF),
+                            ),
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                              const Color(0xFF1045A6),
+                            ),
+                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(1.0),
+                              ),
                             ),
                           ),
                           onPressed: () {
-                            // Handle Sign In
+                            Navigator.pushNamed(context, '/login'); // Navigate to the login page
                           },
                           child: const Text(
                             'Logg inn',

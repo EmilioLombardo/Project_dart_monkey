@@ -1,4 +1,4 @@
-//kommende_arrangement.dart
+// kommende_arrangement.dart
 import 'package:flutter/material.dart';
 import 'package:nablagreier/app_colors.dart';
 import 'package:provider/provider.dart';
@@ -15,10 +15,11 @@ class KommendeArrangement extends StatelessWidget {
     return SliverToBoxAdapter(
       child: Center( // Centering the Container to restrict its width.
         child: Container(
+          height: MediaQuery.of(context).size.width * 1 / 5, // 1/5 of the screen width
           width: MediaQuery.of(context).size.width * 4 / 5,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
               Container(
                 
                 alignment: Alignment.topLeft,
@@ -40,10 +41,31 @@ class KommendeArrangement extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    Container(
-                      width: MediaQuery.of(context).size.width / 3.5,
-                      child: Text(
-                        'Neste arrangement',
+                    OutlinedButton(
+                      style: ButtonStyle(
+                        minimumSize: MaterialStateProperty.all<Size>(
+                          Size(MediaQuery.of(context).size.width / 20, MediaQuery.of(context).size.width / 30),
+                        ),
+                        side: MaterialStateProperty.all<BorderSide>(
+                          BorderSide(color: Color(0xF0FFFFFF), width: 2.0),
+                        ),
+                        foregroundColor: MaterialStateProperty.all<Color>(
+                          Color(0xFF1045A6),
+                        ),
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                          Color(0x40FFFFFF),
+                        ),
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(1.0),
+                          ),
+                        ),
+                      ),
+                      onPressed: () {
+                        // Handle Sign Up
+                      },
+                      child: const Text(
+                        'Les mer',
                         style: TextStyle(
                           fontFamily: 'Satoshi',
                           fontSize: MediaQuery.of(context).size.width / 40,
@@ -53,10 +75,29 @@ class KommendeArrangement extends StatelessWidget {
                         textAlign: TextAlign.left,
                       ),
                     ),
-                    Container(
-                      width: MediaQuery.of(context).size.width / 3.5,
-                      child: Text(
-                        'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+                    SizedBox(width: MediaQuery.of(context).size.width / 20),
+                    ElevatedButton(
+                      style: ButtonStyle(
+                        minimumSize: MaterialStateProperty.all<Size>(
+                          Size(MediaQuery.of(context).size.width / 20, MediaQuery.of(context).size.width / 30),
+                        ),
+                        foregroundColor: MaterialStateProperty.all<Color>(
+                          Color(0xFFDBEEFF),
+                        ),
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                          Color(0xFF1045A6),
+                        ),
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(1.0),
+                          ),
+                        ),
+                      ),
+                      onPressed: () {
+                        // Handle Sign In
+                      },
+                      child: const Text(
+                        'Påmelding',
                         style: TextStyle(
                           fontFamily: 'Carlito',
                           fontSize: MediaQuery.of(context).size.width / 80,

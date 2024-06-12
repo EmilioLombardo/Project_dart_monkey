@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "326663640766",
+    "project_id": "nabla-3560b",
+    "storage_bucket": "nabla-3560b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:326663640766:android:ffbeb7c8e9bf1e17da30ef",
+        "android_client_info": {
+          "package_name": "com.example.nablagreier"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDx0DksBTc9n8-hzwIWRnpVfzCEUXOd87o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
