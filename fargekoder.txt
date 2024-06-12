@@ -8,7 +8,7 @@ Footer
 Nye forslag:
 
 
-Nablå lite ##DBEEFF
+Nablå lite #DBEEFF
 Bakgrunnen
 Header tekst
 
