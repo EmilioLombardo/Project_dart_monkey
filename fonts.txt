@@ -1,15 +1,21 @@
 Fonter
 1. A font style for headings and page titles
-2. A font style for main content areas
-3. A font style for quotes (optional)
+2. A font style for secondary headings
+3. A font style for main content areas
+4. A font style for quotes (optional)
 
-1. https://www.fontshare.com/fonts/satoshi
-Satoshi
+1. https://fonts.google.com/specimen/Poppins?query=poppins
+Poppins-SemiBold.ttf
+Poppins 600
 
-2. https://fonts.google.com/specimen/Carlito?query=Carlito
-Carlito
+2. https://fonts.google.com/specimen/Lato?query=lato
+Lato-Light.ttf
+Lato Light 300 
 
 3. https://fonts.google.com/specimen/Lato?query=lato
+Lato-Regular.ttf
 Lato Regular 400 
 
-
+4. https://fonts.google.com/specimen/Zilla+Slab?preview.size=20&stroke=Serif
+ZillaSlab-SemiBoldItalic.ttf
+Zilla SemiBold 600 Italic
