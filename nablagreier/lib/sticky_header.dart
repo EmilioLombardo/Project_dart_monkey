@@ -36,7 +36,7 @@ class _StickyHeaderState extends State<StickyHeader> {
                     onTap: () {},
                     child: const Text(
                       'Om Nabla',
-                      style: TextStyle(fontSize: 18, color: Colors.white),
+                      style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w300, fontSize: 18, color: Colors.white),
                     ),
                   ),
                   const SizedBox(width: 30),
@@ -44,7 +44,7 @@ class _StickyHeaderState extends State<StickyHeader> {
                     onTap: () {},
                     child: const Text(
                       'Arrangementer',
-                      style: TextStyle(fontSize: 18, color: Colors.white),
+                      style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w300 ,fontSize: 18, color: Colors.white),
                     ),
                   ),
                   const SizedBox(width: 30),
@@ -52,7 +52,7 @@ class _StickyHeaderState extends State<StickyHeader> {
                     onTap: () {},
                     child: const Text(
                       'For bedrifter',
-                      style: TextStyle(fontSize: 18, color: Colors.white),
+                      style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w300 ,fontSize: 18, color: Colors.white),
                     ),
                   ),
                   const SizedBox(width: 30),
@@ -60,7 +60,7 @@ class _StickyHeaderState extends State<StickyHeader> {
                     onTap: () {},
                     child: const Text(
                       'Ny student?',
-                      style: TextStyle(fontSize: 18, color: Colors.white),
+                      style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w300 ,fontSize: 18, color: Colors.white),
                     ),
                   ),
                   const SizedBox(width: 30),
@@ -71,7 +71,8 @@ class _StickyHeaderState extends State<StickyHeader> {
                       },
                       child: const Text(
                         'Admin',
-                        style: TextStyle(fontSize: 18, color: Colors.white),
+                        style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w300 ,fontSize: 18, color: Colors.white),
+
                       ),
                     ),
                     const SizedBox(width: 30),
@@ -104,7 +105,7 @@ class _StickyHeaderState extends State<StickyHeader> {
                       },
                       child: const Text(
                         'Logg ut',
-                        style: TextStyle(fontSize: 18, color: Colors.white),
+                        style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w400 ,fontSize: 14, color: Colors.white),
                       ),
                     ),
                   ],
