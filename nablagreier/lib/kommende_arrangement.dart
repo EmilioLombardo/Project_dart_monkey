@@ -11,59 +11,48 @@ class KommendeArrangement extends StatelessWidget {
     return SliverToBoxAdapter(
       child: Center( // Centering the Container to restrict its width.
         child: Container(
-          height: MediaQuery.of(context).size.width * 1 / 5, // 1/5 of the screen width
-          width: MediaQuery.of(context).size.width * 4 / 5,
+          height: 260, // 1/5 of the screen width
+          width: 1000,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
               Container(
-                width: MediaQuery.of(context).size.width / 3.5,
+                width: 400,
                 child: Text(
                   'Neste arrangement',
-                  style: TextStyle(
-                    fontFamily: 'Satoshi',
-                    fontSize: MediaQuery.of(context).size.width / 40,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
-                  ),
+                  style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w600, fontSize: 36, color: Colors.white),
                   textAlign: TextAlign.left,
                 ),
               ),
+              SizedBox(height: 10),
               Container(
-                width: MediaQuery.of(context).size.width / 3.5,
+                width: 400,
                 child: Text(
                   'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-                  style: TextStyle(
-                    fontFamily: 'Carlito',
-                    fontSize: MediaQuery.of(context).size.width / 80,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white,
-                  ),
+                  style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w300, fontSize: 18, color: Colors.white),
                   textAlign: TextAlign.left,
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context).size.width / 15),
+              SizedBox(height: 100),
               Container(
-                width: MediaQuery.of(context).size.width / 3.5,
+                width: 400,
                 child: Row(
                   children: <Widget>[
                     OutlinedButton(
                       style: ButtonStyle(
-                        minimumSize: MaterialStateProperty.all<Size>(
-                          Size(MediaQuery.of(context).size.width / 20, MediaQuery.of(context).size.width / 30),
-                        ),
                         side: MaterialStateProperty.all<BorderSide>(
-                          BorderSide(color: Color(0xF0FFFFFF), width: 2.0),
+                          const BorderSide(color: Color(0x00FFFFFF), width: 2.0),
                         ),
                         foregroundColor: MaterialStateProperty.all<Color>(
-                          Color(0xFF1045A6),
+                          const Color(0xFFDBEEFF),
                         ),
                         backgroundColor: MaterialStateProperty.all<Color>(
-                          Color(0x40FFFFFF),
+                          Color(0x00000000),
                         ),
+                        padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(16)),
                         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(1.0),
+                            borderRadius: BorderRadius.circular(30.0),
                           ),
                         ),
                       ),
@@ -72,29 +61,22 @@ class KommendeArrangement extends StatelessWidget {
                       },
                       child: const Text(
                         'Les mer',
-                        style: TextStyle(
-                          color: Color(0xFFFFFFFF),
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.w500,
-                          fontSize: 12,
-                        ),
+                        style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w400 ,fontSize: 16, color: Color(0xFFFFFFFF)),
                       ),
                     ),
-                    SizedBox(width: MediaQuery.of(context).size.width / 20),
+                    SizedBox(width: 60),
                     ElevatedButton(
                       style: ButtonStyle(
-                        minimumSize: MaterialStateProperty.all<Size>(
-                          Size(MediaQuery.of(context).size.width / 20, MediaQuery.of(context).size.width / 30),
-                        ),
                         foregroundColor: MaterialStateProperty.all<Color>(
-                          Color(0xFFDBEEFF),
+                          const Color(0xFFDBEEFF),
                         ),
                         backgroundColor: MaterialStateProperty.all<Color>(
-                          Color(0xFF1045A6),
+                          const Color(0xFF1045A6),
                         ),
+                        padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(16)),
                         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(1.0),
+                            borderRadius: BorderRadius.circular(30.0),
                           ),
                         ),
                       ),
@@ -103,12 +85,7 @@ class KommendeArrangement extends StatelessWidget {
                       },
                       child: const Text(
                         'Påmelding',
-                        style: TextStyle(
-                          color: Color(0xFFFFFFFF),
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.w500,
-                          fontSize: 12,
-                        ),
+                        style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w400 ,fontSize: 16, color: Color(0xFFFFFFFF)),
                       ),
                     ),
                   ],
