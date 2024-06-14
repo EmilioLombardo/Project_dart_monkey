@@ -8,7 +8,7 @@ class TopImageSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: Container(
-        height: MediaQuery.of(context).size.width * 1 / 3, // 1/3 of the screen width
+        height: 420, // 1/3 of the screen width
         decoration: const BoxDecoration(
           color: Color(0xFF061025), // Background color of the top part
           image: DecorationImage(
@@ -32,7 +32,7 @@ class TopImageSection extends StatelessWidget {
                     ),
                     Text(
                       'Linjeforeningen for fysikk og matematikk',
-                      style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w300 ,fontSize: 24, color: Colors.white),
+                      style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w400 ,fontSize: 24, color: Colors.white),
                     ),
                     SizedBox(height: 40),
                     Row(
