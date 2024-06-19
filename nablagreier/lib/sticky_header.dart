@@ -33,7 +33,9 @@ class _StickyHeaderState extends State<StickyHeader> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(context, '/about'); // Navigate to about page
+                    },
                     child: const Text(
                       'Om Nabla',
                       style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w300, fontSize: 18, color: Colors.white),

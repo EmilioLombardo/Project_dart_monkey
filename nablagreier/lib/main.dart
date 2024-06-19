@@ -9,6 +9,7 @@ import 'flere_arrangementer.dart';
 import 'login.dart';
 import 'register.dart';
 import 'admin.dart';
+import 'about.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -40,6 +41,7 @@ class MyWebPage extends StatelessWidget {
         '/login': (context) => LoginPage(),
         '/register': (context) => RegisterPage(),
         '/admin': (context) => AdminPage(),
+        '/about': (context) => AboutPage(),
       },
     );
   }
