@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'sticky_header.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
@@ -20,43 +19,51 @@ class _AboutPageState extends State<AboutPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: <Widget>[
-          StickyHeader(),
-          SliverToBoxAdapter(
-            child: Row(
+      body: Row(
+        children: [
+          Flexible(
+            flex: 1,
+            fit: FlexFit.loose,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Expanded(
-                  flex: 1,
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: ListView.builder(
-                          itemCount: markdownFiles.length,
-                          itemBuilder: (context, index) {
-                            return InkWell(
-                              onTap: () => _loadMarkdownFile(markdownFiles[index]),
-                              child: Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: Text('Markdown ${index + 1}'),
-                              ),
-                            );
-                          },
+                Container(
+                  height: MediaQuery.of(context).size.height,
+                  child: ListView.builder(
+                    itemCount: markdownFiles.length,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () => _loadMarkdownFile(markdownFiles[index]),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Text('Markdown ${index + 1}'),
                         ),
-                      ),
-                    ],
+                      );
+                    },
                   ),
-                ),
-                VerticalDivider(),
-                Expanded(
-                  flex: 2,
-                  child: selectedMarkdownContent == null
-                    ? Center(child: Text('Select a file to view'))
-                    : Markdown(data: selectedMarkdownContent!),
                 ),
               ],
             ),
-          )
+          ),
+          VerticalDivider(),
+          Flexible(
+            flex: 2,
+            fit: FlexFit.loose,
+            child: selectedMarkdownContent == null
+                ? Center(child: Text('Select a file to view'))
+                : Markdown(
+                    data: selectedMarkdownContent!,
+                    styleSheet: MarkdownStyleSheet(
+                      p: TextStyle(fontFamily: 'CustomFont', fontSize: 16.0),
+                      h1: TextStyle(fontFamily: 'CustomFont', fontSize: 24.0, fontWeight: FontWeight.bold),
+                      h2: TextStyle(fontFamily: 'CustomFont', fontSize: 20.0, fontWeight: FontWeight.bold),
+                      h3: TextStyle(fontFamily: 'CustomFont', fontSize: 18.0, fontWeight: FontWeight.bold),
+                      h4: TextStyle(fontFamily: 'CustomFont', fontSize: 16.0, fontWeight: FontWeight.bold),
+                      h5: TextStyle(fontFamily: 'CustomFont', fontSize: 14.0, fontWeight: FontWeight.bold),
+                      h6: TextStyle(fontFamily: 'CustomFont', fontSize: 12.0, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+          ),
         ],
       ),
     );
