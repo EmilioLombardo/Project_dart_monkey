@@ -10,6 +10,7 @@ import 'login.dart';
 import 'register.dart';
 import 'admin.dart';
 import 'firebase_options.dart';
+import 'eventDetail.dart'; // Import the new event detail page
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,6 +41,8 @@ class MyWebPage extends StatelessWidget {
         '/login': (context) => LoginPage(),
         '/register': (context) => RegisterPage(),
         '/admin': (context) => AdminPage(),
+        // Define a route for the event detail page
+        '/eventDetail': (context) => EventDetailPage(eventData: ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>),
       },
     );
   }

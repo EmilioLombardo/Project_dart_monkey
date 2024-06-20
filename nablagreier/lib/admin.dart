@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'adminUserRequests.dart'; // Import the new page
+import 'adminUserRequests.dart'; // Import the AdminUserRequestsPage
+import 'adminMakeEvent.dart'; // Import the AdminMakeEventPage
+import 'eventList.dart'; // Import the EventListPage
 
 class AdminPage extends StatefulWidget {
   @override
@@ -15,7 +17,7 @@ class _AdminPageState extends State<AdminPage> {
 
   final Map<String, List<String>> moduleOptions = {
     'Administrer Brukere': ['Registreringsforespørsler', 'Option 2', 'Option 3'],
-    'Administrer Arrangement': ['Option 1', 'Option 2', 'Option 3'],
+    'Administrer Arrangement': ['Legg til arrangement', 'Arrangement liste', 'Option 3'],
     'Administrer Undergrupper': ['Option 1', 'Option 2', 'Option 3'],
   };
 
@@ -26,6 +28,16 @@ class _AdminPageState extends State<AdminPage> {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => AdminUserRequestsPage()),
+      );
+    } else if (option == 'Legg til arrangement') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => AdminMakeEventPage()),
+      );
+    } else if (option == 'Arrangement liste') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => EventListPage()),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
