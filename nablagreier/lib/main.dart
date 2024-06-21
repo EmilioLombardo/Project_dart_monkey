@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +10,7 @@ import 'flere_arrangementer.dart';
 import 'login.dart';
 import 'register.dart';
 import 'admin.dart';
+import 'profilePage.dart'; // Import ProfilePage
 import 'firebase_options.dart';
 import 'eventDetail.dart'; // Import the new event detail page
 
@@ -41,6 +43,7 @@ class MyWebPage extends StatelessWidget {
         '/login': (context) => LoginPage(),
         '/register': (context) => RegisterPage(),
         '/admin': (context) => AdminPage(),
+        '/profile': (context) => ProfilePage(userId: FirebaseAuth.instance.currentUser!.uid), // Add ProfilePage route
         // Define a route for the event detail page
         '/eventDetail': (context) => EventDetailPage(eventData: ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>),
       },
