@@ -19,7 +19,7 @@ class _AboutPageState extends State<AboutPage> {
 
           SliverToBoxAdapter(
             child: Container(
-              padding: const EdgeInsets.fromLTRB(0,100,0,180),
+              padding: const EdgeInsets.fromLTRB(0,100,0,100),
               child: Center(
                 child: Column(
                   children: <Widget>[
