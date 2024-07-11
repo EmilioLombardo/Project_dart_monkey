@@ -31,6 +31,8 @@ class _ProfilePageState extends State<ProfilePage> {
   final _linkedinController = TextEditingController();
   final _snapchatController = TextEditingController();
 
+  Map<String, TextEditingController> _committeeControllers = {};
+
   Future<DocumentSnapshot> _getUserProfile() {
     return _firestore.collection('activeUsers').doc(widget.userId).get();
   }
@@ -54,6 +56,43 @@ class _ProfilePageState extends State<ProfilePage> {
           'snapchat': _snapchatController.text,
         },
       });
+
+      // Update committee biographies
+      for (var entry in _committeeControllers.entries) {
+        String committeeName = entry.key;
+        String biographyText = entry.value.text;
+
+        // Find the committee document with the matching name
+        QuerySnapshot committeeSnapshot = await _firestore
+            .collection('komiteer')
+            .where('name', isEqualTo: committeeName)
+            .get();
+
+        if (committeeSnapshot.docs.isNotEmpty) {
+          DocumentSnapshot committeeDoc = committeeSnapshot.docs.first;
+
+          // Update the biography in activeMembers and unactiveMembers
+          Map<String, dynamic> committeeData = committeeDoc.data() as Map<String, dynamic>;
+          bool updated = false;
+
+          for (var memberType in ['activeMembers', 'unactiveMembers']) {
+            if (committeeData.containsKey(memberType)) {
+              Map<String, dynamic> members = Map<String, dynamic>.from(committeeData[memberType]);
+              members.forEach((key, value) {
+                if (value['username'] == _usernameController.text) {
+                  members[key]['biography'] = biographyText;
+                  committeeData[memberType] = members;
+                  updated = true;
+                }
+              });
+            }
+          }
+
+          if (updated) {
+            await _firestore.collection('komiteer').doc(committeeDoc.id).update(committeeData);
+          }
+        }
+      }
 
       setState(() {
         _isEditing = false;
@@ -107,7 +146,7 @@ class _ProfilePageState extends State<ProfilePage> {
           final username = data['username'] ?? '';
           final biography = data['biography'] ?? '';
           final birthDate = data['birthDate'] ?? 'N/A';
-          final memberOf = (data['memberOf'] as List<dynamic>?)?.join(', ') ?? 'N/A';
+          final memberOf = (data['memberOf'] as List<dynamic>?) ?? [];
           final hobbies = (data['hobbies'] as List<dynamic>?)?.join(', ') ?? 'N/A';
           final favoriteQuotes = (data['favoriteQuotes'] as List<dynamic>?)?.join(', ') ?? 'N/A';
           final badges = (data['badges'] as List<dynamic>?)?.map((badge) => badge['name']).join(', ') ?? 'N/A';
@@ -131,6 +170,11 @@ class _ProfilePageState extends State<ProfilePage> {
           _facebookController.text = socialLinks?['facebook'] ?? '';
           _linkedinController.text = socialLinks?['linkedin'] ?? '';
           _snapchatController.text = socialLinks?['snapchat'] ?? '';
+
+          // Initialize committee controllers
+          for (String committee in memberOf) {
+            _committeeControllers[committee] = TextEditingController();
+          }
 
           return SingleChildScrollView(
             padding: const EdgeInsets.all(16.0),
@@ -183,7 +227,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     spacing: 16.0,
                     runSpacing: 16.0,
                     children: [
-                      _buildProfileField('Member Of', memberOf),
+                      _buildProfileField('Member Of', memberOf.isNotEmpty ? memberOf.join(', ') : 'N/A'),
                       _buildEditableProfileField('Hobbies', _hobbiesController),
                       _buildEditableProfileField('Favorite Quotes', _favoriteQuotesController),
                       _buildProfileField('Badges', badges),
@@ -200,6 +244,15 @@ class _ProfilePageState extends State<ProfilePage> {
                       _buildSocialLinkIcon('Snapchat', _snapchatController, 'assets/snapchat.png'),
                     ],
                   ),
+                  if (memberOf.isNotEmpty) ...[
+                    const Divider(),
+                    _buildCategoryHeader('Committee Biography'),
+                    Wrap(
+                      spacing: 16.0,
+                      runSpacing: 16.0,
+                      children: _buildCommitteeBiographyFields(memberOf),
+                    ),
+                  ],
                 ],
               ),
             ),
@@ -263,11 +316,10 @@ class _ProfilePageState extends State<ProfilePage> {
                     contentPadding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                   ),
                   keyboardType: keyboardType,
+                  minLines: 1,
+                  maxLines: null, // Allow the field to expand vertically
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter $label';
-                    }
-                    return null;
+                    return null; // No validation for optional fields
                   },
                 )
               : Text(
@@ -277,6 +329,24 @@ class _ProfilePageState extends State<ProfilePage> {
         ],
       ),
     );
+  }
+
+  List<Widget> _buildCommitteeBiographyFields(List<dynamic> committees) {
+    List<Widget> fields = [];
+    for (int i = 0; i < committees.length; i += 2) {
+      fields.add(Row(
+        children: [
+          Expanded(child: _buildCommitteeBiographyField(committees[i])),
+          if (i + 1 < committees.length) Expanded(child: _buildCommitteeBiographyField(committees[i + 1])),
+        ],
+      ));
+    }
+    return fields;
+  }
+
+  Widget _buildCommitteeBiographyField(String committee) {
+    final controller = _committeeControllers[committee];
+    return _buildEditableProfileField(committee, controller!);
   }
 
   Widget _buildSocialLinkIcon(String label, TextEditingController controller, String iconPath) {
@@ -316,7 +386,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   },
                 ),
               )
-            : Container(), // Hide the text when not editing
+            : Container(), 
       ],
     );
   }
