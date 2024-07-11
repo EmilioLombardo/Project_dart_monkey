@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
@@ -10,7 +11,11 @@ import 'login.dart';
 import 'register.dart';
 import 'admin.dart';
 import 'about.dart';
+import 'profilePage.dart'; // Import ProfilePage
 import 'firebase_options.dart';
+import 'eventDetail.dart'; // Import the new event detail page
+import 'adminAddCommittee.dart'; // Import AdminAddCommitteePage
+import 'adminEditCommittee.dart'; // Import AdminEditCommitteePage
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,6 +47,10 @@ class MyWebPage extends StatelessWidget {
         '/register': (context) => RegisterPage(),
         '/admin': (context) => AdminPage(),
         '/about': (context) => AboutPage(),
+        '/profile': (context) => ProfilePage(userId: FirebaseAuth.instance.currentUser!.uid), // Add ProfilePage route
+        '/eventDetail': (context) => EventDetailPage(eventData: ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>),
+        '/adminAddCommittee': (context) => AdminAddCommitteePage(), // Add route for AdminAddCommitteePage
+        '/adminEditCommittee': (context) => AdminEditCommitteePage(), // Add route for AdminEditCommitteePage
       },
     );
   }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:flutter/services.dart' show rootBundle;
+import 'sticky_header.dart';
 
 class AboutPage extends StatefulWidget {
   @override
@@ -9,76 +8,346 @@ class AboutPage extends StatefulWidget {
 }
 
 class _AboutPageState extends State<AboutPage> {
-  final List<String> markdownFiles = [
-    'assets/markdown1.md',
-    'assets/markdown2.md',
-    'assets/markdown3.md',
-  ];
-  String? selectedMarkdownContent;
+  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Row(
-        children: [
-          Flexible(
-            flex: 1,
-            fit: FlexFit.loose,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  height: MediaQuery.of(context).size.height,
-                  child: ListView.builder(
-                    itemCount: markdownFiles.length,
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () => _loadMarkdownFile(markdownFiles[index]),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Text('Markdown ${index + 1}'),
-                        ),
-                      );
-                    },
-                  ),
+      body: CustomScrollView(
+        slivers: <Widget>[
+          StickyHeader(),
+
+          SliverToBoxAdapter(
+            child: Container(
+              padding: const EdgeInsets.fromLTRB(0,100,0,100),
+              child: Center(
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      'Hva er Nabla?',
+                      style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w600 ,fontSize: 40, color: Colors.white),
+                    ),
+                    Text(
+                      'Nabla er linjeforeningen for fysikk og matematikk',
+                      style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w400 ,fontSize: 24, color: Colors.white),
+                    ),  
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
-          VerticalDivider(),
-          Flexible(
-            flex: 2,
-            fit: FlexFit.loose,
-            child: selectedMarkdownContent == null
-                ? Center(child: Text('Select a file to view'))
-                : Markdown(
-                    data: selectedMarkdownContent!,
-                    styleSheet: MarkdownStyleSheet(
-                      p: TextStyle(fontFamily: 'CustomFont', fontSize: 16.0),
-                      h1: TextStyle(fontFamily: 'CustomFont', fontSize: 24.0, fontWeight: FontWeight.bold),
-                      h2: TextStyle(fontFamily: 'CustomFont', fontSize: 20.0, fontWeight: FontWeight.bold),
-                      h3: TextStyle(fontFamily: 'CustomFont', fontSize: 18.0, fontWeight: FontWeight.bold),
-                      h4: TextStyle(fontFamily: 'CustomFont', fontSize: 16.0, fontWeight: FontWeight.bold),
-                      h5: TextStyle(fontFamily: 'CustomFont', fontSize: 14.0, fontWeight: FontWeight.bold),
-                      h6: TextStyle(fontFamily: 'CustomFont', fontSize: 12.0, fontWeight: FontWeight.bold),
-                    ),
+          SliverToBoxAdapter(
+            child: Container(
+              padding: EdgeInsets.fromLTRB(0,40,0,40),
+              color: const Color(0xFF051752),
+              child: Center( 
+                child: Container(
+                  height: 260, // 1/5 of the screen width
+                  width: 1000,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(
+                        width: 400,
+                        child: Text(
+                          'Styret',
+                          style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w600, fontSize: 36, color: Colors.white),
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      SizedBox(
+                        width: 400,
+                        child: Text(
+                          'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+                          style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w300, fontSize: 18, color: Colors.white),
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                      SizedBox(height: 100),
+                      SizedBox(
+                        width: 400,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            TextButton(                      
+                              onPressed: () {
+                                // Handle Les mer
+                              },
+                              child: const Text(
+                                'Les mer',
+                                style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w400 ,fontSize: 16, color: Color(0xFFFFFFFF)),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
+                ),
+              ),
+            )
+          ),
+          SliverToBoxAdapter(
+            child: Container(
+              padding: EdgeInsets.fromLTRB(0,40,0,40),
+              child: Center( 
+                child: Container(
+                  height: 260, // 1/5 of the screen width
+                  width: 1000,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(
+                        width: 400,
+                        child: Text(
+                          'Undergrupper',
+                          style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w600, fontSize: 36, color: Colors.white),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      SizedBox(
+                        width: 400,
+                        child: Text(
+                          'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+                          style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w300, fontSize: 18, color: Colors.white),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      SizedBox(height: 100),
+                      SizedBox(
+                        width: 400,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            TextButton(                      
+                              onPressed: () {
+                                // Handle Les mer
+                              },
+                              child: const Text(
+                                'Les mer',
+                                style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w400 ,fontSize: 16, color: Color(0xFFFFFFFF)),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )
+          ),
+          SliverToBoxAdapter(
+            child: Container(
+              padding: EdgeInsets.fromLTRB(0,40,0,40),
+              color: const Color(0xFF051752),
+              child: Center( 
+                child: Container(
+                  height: 260, // 1/5 of the screen width
+                  width: 1000,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                      SizedBox(
+                        width: 400,
+                        child: Text(
+                          'Tillitsvalgte',
+                          style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w600, fontSize: 36, color: Colors.white),
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      SizedBox(
+                        width: 400,
+                        child: Text(
+                          'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+                          style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w300, fontSize: 18, color: Colors.white),
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                      SizedBox(height: 100),
+                      SizedBox(
+                        width: 400,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            TextButton(                      
+                              onPressed: () {
+                                // Handle Les mer
+                              },
+                              child: const Text(
+                                'Les mer',
+                                style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w400 ,fontSize: 16, color: Color(0xFFFFFFFF)),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )
+          ),
+          SliverToBoxAdapter(
+            child: Container(
+              padding: EdgeInsets.fromLTRB(0,40,0,40),
+              child: Center( 
+                child: Container(
+                  height: 260, // 1/5 of the screen width
+                  width: 1000,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(
+                        width: 400,
+                        child: Text(
+                          'Lover og forskrifter',
+                          style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w600, fontSize: 36, color: Colors.white),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      SizedBox(
+                        width: 400,
+                        child: Text(
+                          'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+                          style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w300, fontSize: 18, color: Colors.white),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      SizedBox(height: 100),
+                      SizedBox(
+                        width: 400,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            TextButton(                      
+                              onPressed: () {
+                                // Handle Les mer
+                              },
+                              child: const Text(
+                                'Les mer',
+                                style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w400 ,fontSize: 16, color: Color(0xFFFFFFFF)),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )
+          ),
+          SliverToBoxAdapter(
+            child: Container(
+              padding: EdgeInsets.fromLTRB(0,40,0,40),
+              color: const Color(0xFF051752),
+              child: Center( 
+                child: Container(
+                  height: 260, // 1/5 of the screen width
+                  width: 1000,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(
+                        width: 400,
+                        child: Text(
+                          'Fond',
+                          style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w600, fontSize: 36, color: Colors.white),
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      SizedBox(
+                        width: 400,
+                        child: Text(
+                          'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+                          style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w300, fontSize: 18, color: Colors.white),
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                      SizedBox(height: 100),
+                      SizedBox(
+                        width: 400,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            TextButton(                      
+                              onPressed: () {
+                                // Handle Les mer
+                              },
+                              child: const Text(
+                                'Les mer',
+                                style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w400 ,fontSize: 16, color: Color(0xFFFFFFFF)),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )
+          ),
+          SliverToBoxAdapter(
+            child: Container(
+              padding: EdgeInsets.fromLTRB(0,40,0,40),
+              child: Center( 
+                child: Container(
+                  height: 260, // 1/5 of the screen width
+                  width: 1000,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(
+                        width: 400,
+                        child: Text(
+                          'Kompendier',
+                          style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w600, fontSize: 36, color: Colors.white),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      SizedBox(
+                        width: 400,
+                        child: Text(
+                          'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+                          style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w300, fontSize: 18, color: Colors.white),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      SizedBox(height: 100),
+                      SizedBox(
+                        width: 400,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            TextButton(                      
+                              onPressed: () {
+                                // Handle Les mer
+                              },
+                              child: const Text(
+                                'Les mer',
+                                style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w400 ,fontSize: 16, color: Color(0xFFFFFFFF)),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )
           ),
         ],
       ),
     );
   }
-
-  Future<void> _loadMarkdownFile(String filePath) async {
-    try {
-      final content = await rootBundle.loadString(filePath);
-      setState(() {
-        selectedMarkdownContent = content;
-      });
-    } catch (e) {
-      setState(() {
-        selectedMarkdownContent = 'Error loading markdown file: $filePath';
-      });
-    }
-  }
+  
 }

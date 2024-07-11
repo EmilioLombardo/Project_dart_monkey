@@ -93,7 +93,9 @@ class _StickyHeaderState extends State<StickyHeader> {
                   const SizedBox(width: 15),
                   if (user != null) ...[
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushNamed(context, '/profile'); // Navigate to profile page
+                      },
                       child: const Icon(Icons.account_circle, size: 30.0, color: Colors.white),
                     ),
                     const SizedBox(width: 15),

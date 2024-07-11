@@ -27,9 +27,26 @@ class _AdminUserRequestsPageState extends State<AdminUserRequestsPage> {
       final data = userRequest.data() as Map<String, dynamic>;
       final userId = userRequest.id;
 
-      // Remove the status field and add the uid field
       data.remove('status');
       data['uid'] = userId;
+      data['name'] = '';  
+      data['lastName'] = '';  
+      data['memberOf'] = [];  
+      data['superUser'] = false;  
+      data['adminAccess'] = [];  
+      data['civilStatus'] = '';  
+      data['cardNumber'] = 0;  
+      data['birthDate'] = "";  
+      data['biography'] = "";  
+      data['profilePicture'] = '';  
+      data['lastLogin'] = "";  
+      data['hobbies'] = [];  
+      data['favoriteQuotes'] = [];  
+      data['badges'] = [];  
+      data['theme'] = '';  
+      data['socialLinks'] = {}; 
+      data['origin'] = ''; 
+      data['class'] = ''; 
 
       // Add the new document to the activeUsers collection
       await _firestore.collection('activeUsers').doc(userId).set(data);
