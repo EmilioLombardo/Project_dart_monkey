@@ -15,7 +15,7 @@ nye:
     /../tillitsvalgte/
     /../lover-og-forskrifter/
     /../fond/
-    /../kompedier/
+    /../kompendier/
 ../arrangementer/
     *kalender har lik som opprinnelse
     *lister har lik som opprinnelse

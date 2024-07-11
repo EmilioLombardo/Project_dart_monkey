@@ -8,7 +8,7 @@ class TopImageSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: Container(
-        height: MediaQuery.of(context).size.width * 1 / 3, // 1/3 of the screen width
+        height: 420, // 1/3 of the screen width
         decoration: const BoxDecoration(
           color: Color(0xFF061025), // Background color of the top part
           image: DecorationImage(
@@ -20,7 +20,7 @@ class TopImageSection extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             Positioned(
-              top: MediaQuery.of(context).size.width * 1 / 10, // Adjust the position based on your needs
+              top: 100, // Adjust the position based on your needs
               left: 0,
               right: 0,
               child: Center(
@@ -28,43 +28,31 @@ class TopImageSection extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       'Nabla',
-                      style: TextStyle(
-                        fontFamily: 'Satoshi',
-                        fontSize: MediaQuery.of(context).size.width / 40,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white,
-                      ),
+                      style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w600 ,fontSize: 56, color: Colors.white),
                     ),
                     Text(
                       'Linjeforeningen for fysikk og matematikk',
-                      style: TextStyle(
-                        fontFamily: 'Satoshi', // font
-                        fontSize: MediaQuery.of(context).size.width / 60,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white,
-                      ),
+                      style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w400 ,fontSize: 24, color: Colors.white),
                     ),
-                    SizedBox(height: MediaQuery.of(context).size.width / 60),
+                    SizedBox(height: 40),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         OutlinedButton(
                           style: ButtonStyle(
-                            minimumSize: MaterialStateProperty.all<Size>(
-                              Size(MediaQuery.of(context).size.width / 20, MediaQuery.of(context).size.width / 30),
-                            ),
                             side: MaterialStateProperty.all<BorderSide>(
-                              const BorderSide(color: Color(0xF0FFFFFF), width: 2.0),
+                              const BorderSide(color: Color(0xFFFFFFFF), width: 2.0),
                             ),
                             foregroundColor: MaterialStateProperty.all<Color>(
-                              const Color(0xFF1045A6),
+                              const Color(0xFFDBEEFF),
                             ),
                             backgroundColor: MaterialStateProperty.all<Color>(
-                              const Color(0x40FFFFFF),
+                              Color(0x00000000),
                             ),
+                            padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(18)),
                             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                               RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(1.0),
+                                borderRadius: BorderRadius.circular(30.0),
                               ),
                             ),
                           ),
@@ -73,29 +61,22 @@ class TopImageSection extends StatelessWidget {
                           },
                           child: const Text(
                             'Registrer deg',
-                            style: TextStyle(
-                              color: Color(0xFFFFFFFF),
-                              fontFamily: 'Lato',
-                              fontWeight: FontWeight.w500,
-                              fontSize: 12,
-                            ),
+                            style: TextStyle(shadows: <Shadow>[Shadow(offset: Offset(0.0, 0.0), blurRadius: 3.0, color: Color(0xFF061025),),], fontFamily: 'Lato', fontWeight: FontWeight.w700 ,fontSize: 18, color: Color(0xFFFFFFFF)),
                           ),
                         ),
-                        SizedBox(width: MediaQuery.of(context).size.width / 20),
+                        SizedBox(width: 40),
                         ElevatedButton(
                           style: ButtonStyle(
-                            minimumSize: MaterialStateProperty.all<Size>(
-                              Size(MediaQuery.of(context).size.width / 20, MediaQuery.of(context).size.width / 30),
-                            ),
                             foregroundColor: MaterialStateProperty.all<Color>(
                               const Color(0xFFDBEEFF),
                             ),
                             backgroundColor: MaterialStateProperty.all<Color>(
                               const Color(0xFF1045A6),
                             ),
+                            padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(18)),
                             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                               RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(1.0),
+                                borderRadius: BorderRadius.circular(30.0),
                               ),
                             ),
                           ),
@@ -104,12 +85,7 @@ class TopImageSection extends StatelessWidget {
                           },
                           child: const Text(
                             'Logg inn',
-                            style: TextStyle(
-                              color: Color(0xFFFFFFFF),
-                              fontFamily: 'Lato',
-                              fontWeight: FontWeight.w500,
-                              fontSize: 12,
-                            ),
+                            style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w700 ,fontSize: 18, color: Color(0xFFFFFFFF)),
                           ),
                         ),
                       ],
