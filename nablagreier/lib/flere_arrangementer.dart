@@ -35,6 +35,8 @@ class FlereArrangementer extends StatelessWidget {
                 var eventType = data['type'];
                 var registrationCloseDate = data['registrationCloseDate'];
                 var numberOfSpots = data['numberOfSpots'] ?? 'N/A';
+                var participantList = data['participantList'] ?? [];
+                var spotsTaken = participantList.length;
 
                 var eventWidget = GestureDetector(
                   onTap: () {
@@ -93,7 +95,7 @@ class FlereArrangementer extends StatelessWidget {
                                 textAlign: TextAlign.left,
                               ),
                               Text(
-                                '$numberOfSpots',
+                                '$spotsTaken/$numberOfSpots',
                                 style: TextStyle(
                                   fontFamily: 'Lato',
                                   fontSize: MediaQuery.of(context).size.width / 90,
