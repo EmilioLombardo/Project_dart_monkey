@@ -12,10 +12,9 @@ class _AdminEditCommitteePageState extends State<AdminEditCommitteePage> {
   final _aboutController = TextEditingController();
   final _emailController = TextEditingController();
   final _logoController = TextEditingController();
+  final _searchController = TextEditingController();
 
   String? _selectedCommitteeId;
-  TextEditingController _searchController = TextEditingController();
-
   Map<String, dynamic> _activeMembers = {};
   Map<String, dynamic> _inactiveMembers = {};
 
@@ -49,7 +48,6 @@ class _AdminEditCommitteePageState extends State<AdminEditCommitteePage> {
         }
 
         final committees = snapshot.data!.docs;
-
         return GridView.builder(
           padding: const EdgeInsets.all(16.0),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -65,52 +63,55 @@ class _AdminEditCommitteePageState extends State<AdminEditCommitteePage> {
             final committeeLogo = committee['logo'] ?? 'assets/default_logo.png';
 
             return GestureDetector(
-              onTap: () {
-                setState(() {
-                  _selectedCommitteeId = committee.id;
-                  _nameController.text = committee['name'] ?? '';
-                  _aboutController.text = committee['about'] ?? '';
-                  _emailController.text = committee['email'] ?? '';
-                  _logoController.text = committee['logo'] ?? '';
-                  _activeMembers = Map<String, dynamic>.from(committee['activeMembers'] ?? {});
-                  _inactiveMembers = Map<String, dynamic>.from(committee['unactiveMembers'] ?? {});
-                });
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
-                      blurRadius: 5,
-                      offset: Offset(0, 5),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircleAvatar(
-                      backgroundImage: NetworkImage(committeeLogo),
-                      radius: 30,
-                    ),
-                    SizedBox(height: 10.0),
-                    Text(
-                      committeeName,
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-              ),
+              onTap: () => _selectCommittee(committee),
+              child: _buildCommitteeCard(committeeName, committeeLogo),
             );
           },
         );
       },
+    );
+  }
+
+  void _selectCommittee(DocumentSnapshot committee) {
+    setState(() {
+      _selectedCommitteeId = committee.id;
+      _nameController.text = committee['name'] ?? '';
+      _aboutController.text = committee['about'] ?? '';
+      _emailController.text = committee['email'] ?? '';
+      _logoController.text = committee['logo'] ?? '';
+      _activeMembers = Map<String, dynamic>.from(committee['activeMembers'] ?? {});
+      _inactiveMembers = Map<String, dynamic>.from(committee['unactiveMembers'] ?? {});
+    });
+  }
+
+  Widget _buildCommitteeCard(String committeeName, String committeeLogo) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 5,
+            offset: Offset(0, 5),
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CircleAvatar(
+            backgroundImage: NetworkImage(committeeLogo),
+            radius: 30,
+          ),
+          SizedBox(height: 10.0),
+          Text(
+            committeeName,
+            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
     );
   }
 
@@ -121,63 +122,24 @@ class _AdminEditCommitteePageState extends State<AdminEditCommitteePage> {
         key: _formKey,
         child: ListView(
           children: [
-            TextFormField(
-              controller: _nameController,
-              decoration: InputDecoration(
-                labelText: 'Name',
-                border: OutlineInputBorder(),
-              ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter a name';
-                }
-                return null;
-              },
-            ),
+            _buildTextField(_nameController, 'Name', 'Please enter a name'),
             SizedBox(height: 16.0),
-            TextFormField(
-              controller: _aboutController,
-              decoration: InputDecoration(
-                labelText: 'About',
-                border: OutlineInputBorder(),
-              ),
-            ),
+            _buildTextField(_aboutController, 'About'),
             SizedBox(height: 16.0),
-            TextFormField(
-              controller: _emailController,
-              decoration: InputDecoration(
-                labelText: 'Email',
-                border: OutlineInputBorder(),
-              ),
-            ),
+            _buildTextField(_emailController, 'Email'),
             SizedBox(height: 16.0),
-            TextFormField(
-              controller: _logoController,
-              decoration: InputDecoration(
-                labelText: 'Logo URL',
-                border: OutlineInputBorder(),
-              ),
-            ),
+            _buildTextField(_logoController, 'Logo URL'),
             SizedBox(height: 16.0),
-            Text(
-              'Users',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
+            _buildSectionTitle('Users'),
             SizedBox(height: 8.0),
             _buildSearchBar(),
             _buildMemberList(),
             SizedBox(height: 16.0),
-            Text(
-              'Active Members',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
+            _buildSectionTitle('Active Members'),
             SizedBox(height: 8.0),
             _buildSelectedMembersList(_activeMembers, true),
             SizedBox(height: 16.0),
-            Text(
-              'Inactive Members',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
+            _buildSectionTitle('Inactive Members'),
             SizedBox(height: 8.0),
             _buildSelectedMembersList(_inactiveMembers, false),
             SizedBox(height: 20),
@@ -191,6 +153,31 @@ class _AdminEditCommitteePageState extends State<AdminEditCommitteePage> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildTextField(TextEditingController controller, String label, [String? validatorMessage]) {
+    return TextFormField(
+      controller: controller,
+      decoration: InputDecoration(
+        labelText: label,
+        border: OutlineInputBorder(),
+      ),
+      validator: validatorMessage != null
+          ? (value) {
+              if (value == null || value.isEmpty) {
+                return validatorMessage;
+              }
+              return null;
+            }
+          : null,
+    );
+  }
+
+  Widget _buildSectionTitle(String title) {
+    return Text(
+      title,
+      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
     );
   }
 
@@ -217,7 +204,6 @@ class _AdminEditCommitteePageState extends State<AdminEditCommitteePage> {
     }
 
     final searchQuery = _searchController.text.toLowerCase();
-
     return FutureBuilder<QuerySnapshot>(
       future: FirebaseFirestore.instance.collection('activeUsers').get(),
       builder: (context, snapshot) {
@@ -248,59 +234,71 @@ class _AdminEditCommitteePageState extends State<AdminEditCommitteePage> {
             final member = members[index].data() as Map<String, dynamic>;
             final memberId = members[index].id;
             final isActive = _activeMembers.containsKey(member['username']);
-            return ListTile(
-              title: Text(member['name'] ?? ''),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Username: ${member['username'] ?? ''}'),
-                  if (isActive) ...[
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            decoration: InputDecoration(labelText: 'Roles'),
-                            onChanged: (value) {
-                              member['roles'] = value.split(',').map((role) => role.trim()).toList();
-                            },
-                            onSubmitted: (value) {
-                              _saveRole(memberId, member['roles']);
-                            },
-                          ),
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.save),
-                          onPressed: () {
-                            _saveRole(memberId, member['roles']);
-                          },
-                        ),
-                      ],
-                    ),
-                  ],
-                ],
-              ),
-              trailing: Switch(
-                value: isActive,
-                onChanged: (value) {
-                  setState(() {
-                    if (value) {
-                      member['joined'] = Timestamp.now(); // Set joined date to now
-                      _inactiveMembers.remove(member['username']);
-                      _activeMembers[member['username']] = member;
-                      _addCommitteeToUser(member['username'], _nameController.text);
-                    } else {
-                      member['left'] = Timestamp.now(); // Set left date to now
-                      _activeMembers.remove(member['username']);
-                      _inactiveMembers[member['username']] = member;
-                      _removeCommitteeFromUser(member['username'], _nameController.text);
-                    }
-                    _updateMemberStatus(member['username'], member, value);
-                  });
-                },
-              ),
-            );
+            return _buildMemberTile(member, memberId, isActive);
           },
         );
+      },
+    );
+  }
+
+  Widget _buildMemberTile(Map<String, dynamic> member, String memberId, bool isActive) {
+    return ListTile(
+      title: Text(member['name'] ?? ''),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Username: ${member['username'] ?? ''}'),
+          if (isActive) _buildRoleField(member, memberId),
+        ],
+      ),
+      trailing: Switch(
+        value: isActive,
+        onChanged: (value) {
+          setState(() {
+            _updateMemberStatus(member['username'], member, value);
+          });
+        },
+      ),
+    );
+  }
+
+  Widget _buildRoleField(Map<String, dynamic> member, String memberId) {
+    return Row(
+      children: [
+        Expanded(
+          child: TextField(
+            decoration: InputDecoration(labelText: 'Roles'),
+            onChanged: (value) {
+              member['roles'] = value.split(',').map((role) => role.trim()).toList();
+            },
+            onSubmitted: (value) {
+              _saveRole(memberId, member['roles']);
+            },
+          ),
+        ),
+        IconButton(
+          icon: Icon(Icons.save),
+          onPressed: () {
+            _saveRole(memberId, member['roles']);
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSelectedMembersList(Map<String, dynamic> members, bool isActiveList) {
+    if (members.isEmpty) {
+      return Container();
+    }
+
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      itemCount: members.length,
+      itemBuilder: (context, index) {
+        final memberKey = members.keys.elementAt(index);
+        final member = members[memberKey];
+        return _buildMemberTile(member, memberKey, isActiveList);
       },
     );
   }
@@ -325,113 +323,6 @@ class _AdminEditCommitteePageState extends State<AdminEditCommitteePage> {
       await docRef.update({activePath: roles});
     } else if (_inactiveMembers.containsKey(username)) {
       await docRef.update({inactivePath: roles});
-    }
-  }
-
-  Widget _buildSelectedMembersList(Map<String, dynamic> members, bool isActiveList) {
-    if (members.isEmpty) {
-      return Container();
-    }
-
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      itemCount: members.length,
-      itemBuilder: (context, index) {
-        final memberKey = members.keys.elementAt(index);
-        final member = members[memberKey];
-        return ListTile(
-          title: Text(member['name'] ?? ''),
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Username: $memberKey'),
-              if (isActiveList) ...[
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        decoration: InputDecoration(labelText: 'Roles'),
-                        onChanged: (value) {
-                          member['roles'] = value.split(',').map((role) => role.trim()).toList();
-                        },
-                        onSubmitted: (value) {
-                          _saveRole(memberKey, member['roles']);
-                        },
-                      ),
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.save),
-                      onPressed: () {
-                        _saveRole(memberKey, member['roles']);
-                      },
-                    ),
-                  ],
-                ),
-              ],
-            ],
-          ),
-          trailing: Switch(
-            value: isActiveList,
-            onChanged: (value) {
-              setState(() {
-                if (value) {
-                  member['joined'] = Timestamp.now(); // Set joined date to now
-                  _inactiveMembers.remove(memberKey);
-                  _activeMembers[memberKey] = member;
-                  _addCommitteeToUser(memberKey, _nameController.text);
-                } else {
-                  member['left'] = Timestamp.now(); // Set left date to now
-                  _activeMembers.remove(memberKey);
-                  _inactiveMembers[memberKey] = member;
-                  _removeCommitteeFromUser(memberKey, _nameController.text);
-                }
-                _updateMemberStatus(memberKey, member, value);
-              });
-            },
-          ),
-        );
-      },
-    );
-  }
-
-  Future<void> _addCommitteeToUser(String username, String committeeName) async {
-    final userQuerySnapshot = await FirebaseFirestore.instance.collection('activeUsers').where('username', isEqualTo: username).get();
-    if (userQuerySnapshot.docs.isNotEmpty) {
-      final userDocRef = userQuerySnapshot.docs.first.reference;
-      final userData = userQuerySnapshot.docs.first.data();
-      final fullName = '${userData['name']} ${userData['lastName']}';
-
-      await userDocRef.update({
-        'memberOf': FieldValue.arrayUnion([committeeName])
-      });
-
-      setState(() {
-        if (_activeMembers.containsKey(username)) {
-          _activeMembers[username]['name'] = fullName;
-        } else if (_inactiveMembers.containsKey(username)) {
-          _inactiveMembers[username]['name'] = fullName;
-        }
-      });
-    }
-  }
-
-  Future<void> _removeCommitteeFromUser(String username, String committeeName) async {
-    final userQuerySnapshot = await FirebaseFirestore.instance.collection('activeUsers').where('username', isEqualTo: username).get();
-    if (userQuerySnapshot.docs.isNotEmpty) {
-      final userDocRef = userQuerySnapshot.docs.first.reference;
-
-      await userDocRef.update({
-        'memberOf': FieldValue.arrayRemove([committeeName])
-      });
-
-      setState(() {
-        if (_activeMembers.containsKey(username)) {
-          _activeMembers[username]['name'] = "";
-        } else if (_inactiveMembers.containsKey(username)) {
-          _inactiveMembers[username]['name'] = "";
-        }
-      });
     }
   }
 
@@ -476,6 +367,46 @@ class _AdminEditCommitteePageState extends State<AdminEditCommitteePage> {
       );
 
       Navigator.pop(context);
+    }
+  }
+
+  Future<void> _addCommitteeToUser(String username, String committeeName) async {
+    final userQuerySnapshot = await FirebaseFirestore.instance.collection('activeUsers').where('username', isEqualTo: username).get();
+    if (userQuerySnapshot.docs.isNotEmpty) {
+      final userDocRef = userQuerySnapshot.docs.first.reference;
+      final userData = userQuerySnapshot.docs.first.data();
+      final fullName = '${userData['name']} ${userData['lastName']}';
+
+      await userDocRef.update({
+        'memberOf': FieldValue.arrayUnion([committeeName])
+      });
+
+      setState(() {
+        if (_activeMembers.containsKey(username)) {
+          _activeMembers[username]['name'] = fullName;
+        } else if (_inactiveMembers.containsKey(username)) {
+          _inactiveMembers[username]['name'] = fullName;
+        }
+      });
+    }
+  }
+
+  Future<void> _removeCommitteeFromUser(String username, String committeeName) async {
+    final userQuerySnapshot = await FirebaseFirestore.instance.collection('activeUsers').where('username', isEqualTo: username).get();
+    if (userQuerySnapshot.docs.isNotEmpty) {
+      final userDocRef = userQuerySnapshot.docs.first.reference;
+
+      await userDocRef.update({
+        'memberOf': FieldValue.arrayRemove([committeeName])
+      });
+
+      setState(() {
+        if (_activeMembers.containsKey(username)) {
+          _activeMembers[username]['name'] = "";
+        } else if (_inactiveMembers.containsKey(username)) {
+          _inactiveMembers[username]['name'] = "";
+        }
+      });
     }
   }
 }

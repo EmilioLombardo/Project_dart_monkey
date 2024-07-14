@@ -15,10 +15,10 @@ class _AdminMakeEventPageState extends State<AdminMakeEventPage> {
   final PageController _pageController = PageController();
 
   // Controllers for form fields
-  final TextEditingController _imageController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _placeController = TextEditingController();
+  final TextEditingController _locationDetailsController = TextEditingController();
   final TextEditingController _startTimeController = TextEditingController();
   final TextEditingController _startDateController = TextEditingController();
   final TextEditingController _endTimeController = TextEditingController();
@@ -29,23 +29,17 @@ class _AdminMakeEventPageState extends State<AdminMakeEventPage> {
   final TextEditingController _registrationCloseTimeController = TextEditingController();
   final TextEditingController _numberOfSpotsController = TextEditingController();
   final TextEditingController _openForController = TextEditingController();
-  final TextEditingController _typeController = TextEditingController();
-  final TextEditingController _categoryController = TextEditingController();
   final TextEditingController _hostController = TextEditingController();
   final TextEditingController _contactEmailController = TextEditingController();
   final TextEditingController _contactPhoneController = TextEditingController();
-  final TextEditingController _cancellationPolicyController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
   final TextEditingController _paymentDetailsController = TextEditingController();
-  final TextEditingController _locationDetailsController = TextEditingController();
-  final TextEditingController _mapLinkController = TextEditingController();
-  final TextEditingController _dressCodeController = TextEditingController();
-  final TextEditingController _foodAndDrinksController = TextEditingController();
-  final TextEditingController _activitiesController = TextEditingController();
-  final TextEditingController _sponsorsController = TextEditingController();
-  final TextEditingController _photographerController = TextEditingController();
-  final TextEditingController _rulesController = TextEditingController();
+  final TextEditingController _imageURLController = TextEditingController();
   final TextEditingController _accountNumberController = TextEditingController();
+
+  // Additional Information Controllers (non-mandatory)
+  final TextEditingController _cancellationPolicyController = TextEditingController();
+  final TextEditingController _dressCodeController = TextEditingController();
 
   @override
   void initState() {
@@ -65,8 +59,8 @@ class _AdminMakeEventPageState extends State<AdminMakeEventPage> {
       var data = eventDoc.data() as Map<String, dynamic>;
       _nameController.text = data['name'] ?? '';
       _descriptionController.text = data['description'] ?? '';
-      _imageController.text = data['imageUrl'] ?? '';
       _placeController.text = data['place'] ?? '';
+      _locationDetailsController.text = data['locationDetails'] ?? '';
       _startDateController.text = data['startDate'] ?? '';
       _startTimeController.text = data['startTime'] ?? '';
       _endDateController.text = data['endDate'] ?? '';
@@ -75,25 +69,43 @@ class _AdminMakeEventPageState extends State<AdminMakeEventPage> {
       _registrationOpenTimeController.text = data['registrationOpenTime'] ?? '';
       _registrationCloseDateController.text = data['registrationCloseDate'] ?? '';
       _registrationCloseTimeController.text = data['registrationCloseTime'] ?? '';
-      _numberOfSpotsController.text = data['numberOfSpots'] ?? '';
-      _openForController.text = data['openFor'] ?? '';
-      _typeController.text = data['type'] ?? '';
-      _categoryController.text = data['category'] ?? '';
+      _numberOfSpotsController.text = data['numberOfSpots'].toString();
+      _openForController.text = data['openFor'].toString();
       _hostController.text = data['host'] ?? '';
       _contactEmailController.text = data['contactEmail'] ?? '';
       _contactPhoneController.text = data['contactPhone'] ?? '';
       _cancellationPolicyController.text = data['cancellationPolicy'] ?? '';
-      _priceController.text = data['price'] ?? '';
+      _priceController.text = data['price'].toString();
       _paymentDetailsController.text = data['paymentDetails'] ?? '';
-      _locationDetailsController.text = data['locationDetails'] ?? '';
-      _mapLinkController.text = data['mapLink'] ?? '';
+      _imageURLController.text = data['imageURL'] ?? '';
       _dressCodeController.text = data['dressCode'] ?? '';
-      _foodAndDrinksController.text = data['foodAndDrinks'] ?? '';
-      _activitiesController.text = data['activities'] ?? '';
-      _sponsorsController.text = data['sponsors'] ?? '';
-      _photographerController.text = data['photographer'] ?? '';
-      _rulesController.text = data['rules'] ?? '';
-      _accountNumberController.text = data['accountNumber'] ?? '';
+      _accountNumberController.text = data['accountNumber'].toString();
+    }
+  }
+
+  Future<void> _selectDate(TextEditingController controller) async {
+    DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null) {
+      setState(() {
+        controller.text = "${picked.toLocal()}".split(' ')[0];
+      });
+    }
+  }
+
+  Future<void> _selectTime(TextEditingController controller) async {
+    TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+    if (picked != null) {
+      setState(() {
+        controller.text = picked.format(context);
+      });
     }
   }
 
@@ -102,8 +114,8 @@ class _AdminMakeEventPageState extends State<AdminMakeEventPage> {
       final eventData = {
         'name': _nameController.text,
         'description': _descriptionController.text,
-        'imageUrl': _imageController.text,
         'place': _placeController.text,
+        'locationDetails': _locationDetailsController.text,
         'startDate': _startDateController.text,
         'startTime': _startTimeController.text,
         'endDate': _endDateController.text,
@@ -112,40 +124,27 @@ class _AdminMakeEventPageState extends State<AdminMakeEventPage> {
         'registrationOpenTime': _registrationOpenTimeController.text,
         'registrationCloseDate': _registrationCloseDateController.text,
         'registrationCloseTime': _registrationCloseTimeController.text,
-        'numberOfSpots': _numberOfSpotsController.text,
+        'numberOfSpots': int.parse(_numberOfSpotsController.text),
         'openFor': _openForController.text,
-        'type': _typeController.text,
-        'category': _categoryController.text,
         'host': _hostController.text,
         'contactEmail': _contactEmailController.text,
         'contactPhone': _contactPhoneController.text,
         'cancellationPolicy': _cancellationPolicyController.text,
-        'price': _priceController.text,
+        'price': int.parse(_priceController.text),
         'paymentDetails': _paymentDetailsController.text,
-        'locationDetails': _locationDetailsController.text,
-        'mapLink': _mapLinkController.text,
+        'imageURL': _imageURLController.text,
         'dressCode': _dressCodeController.text,
-        'foodAndDrinks': _foodAndDrinksController.text,
-        'activities': _activitiesController.text,
-        'sponsors': _sponsorsController.text,
-        'photographer': _photographerController.text,
-        'rules': _rulesController.text,
-        'accountNumber': _accountNumberController.text,
+        'accountNumber': int.parse(_accountNumberController.text),
+        'participantList': [],
+        'waitingList': [],
+        'lastEdited': 'currentUser', // replace with actual current user
+        'lastEditDate': FieldValue.serverTimestamp(),
       };
 
-      if (widget.eventId != null) {
-        FirebaseFirestore.instance
-            .collection('events')
-            .doc(widget.eventId)
-            .update(eventData);
-      } else {
-        final newDoc = FirebaseFirestore.instance.collection('events').doc();
-        newDoc.set({
-          'uid': newDoc.id,
-          'createdAt': FieldValue.serverTimestamp(),
-          ...eventData,
-        });
-      }
+      FirebaseFirestore.instance
+          .collection('events')
+          .doc(widget.eventId)
+          .update(eventData);
 
       Navigator.pop(context);
     }
@@ -158,8 +157,8 @@ class _AdminMakeEventPageState extends State<AdminMakeEventPage> {
         'uid': newDoc.id,
         'name': _nameController.text,
         'description': _descriptionController.text,
-        'imageUrl': _imageController.text,
         'place': _placeController.text,
+        'locationDetails': _locationDetailsController.text,
         'startDate': _startDateController.text,
         'startTime': _startTimeController.text,
         'endDate': _endDateController.text,
@@ -168,26 +167,24 @@ class _AdminMakeEventPageState extends State<AdminMakeEventPage> {
         'registrationOpenTime': _registrationOpenTimeController.text,
         'registrationCloseDate': _registrationCloseDateController.text,
         'registrationCloseTime': _registrationCloseTimeController.text,
-        'numberOfSpots': _numberOfSpotsController.text,
+        'numberOfSpots': int.parse(_numberOfSpotsController.text),
         'openFor': _openForController.text,
-        'type': _typeController.text,
-        'category': _categoryController.text,
         'host': _hostController.text,
         'contactEmail': _contactEmailController.text,
         'contactPhone': _contactPhoneController.text,
         'cancellationPolicy': _cancellationPolicyController.text,
-        'price': _priceController.text,
+        'price': int.parse(_priceController.text),
         'paymentDetails': _paymentDetailsController.text,
-        'locationDetails': _locationDetailsController.text,
-        'mapLink': _mapLinkController.text,
+        'imageURL': _imageURLController.text,
         'dressCode': _dressCodeController.text,
-        'foodAndDrinks': _foodAndDrinksController.text,
-        'activities': _activitiesController.text,
-        'sponsors': _sponsorsController.text,
-        'photographer': _photographerController.text,
-        'rules': _rulesController.text,
-        'accountNumber': _accountNumberController.text,
+        'accountNumber': int.parse(_accountNumberController.text),
         'createdAt': FieldValue.serverTimestamp(),
+        'publishedBy': 'currentUser', // replace with actual current user
+        'published': FieldValue.serverTimestamp(),
+        'lastEdited': 'currentUser', // replace with actual current user
+        'lastEditDate': FieldValue.serverTimestamp(),
+        'participantList': [],
+        'waitingList': [],
       };
 
       newDoc.set(eventData);
@@ -250,7 +247,8 @@ class _AdminMakeEventPageState extends State<AdminMakeEventPage> {
                     _buildTimingPage(),
                     _buildRegistrationPage(),
                     _buildContactDetailsPage(),
-                    _buildEventDetailsPage(),
+                    _buildPaymentDetailsPage(), // New page for Payment Details
+                    _buildAdditionalInformationPage(), // Page for non-mandatory fields
                     _buildSummaryPage(),
                   ],
                 ),
@@ -268,8 +266,9 @@ class _AdminMakeEventPageState extends State<AdminMakeEventPage> {
       children: [
         _buildTextField(_nameController, 'Name'),
         _buildTextField(_descriptionController, 'Description'),
-        _buildTextField(_imageController, 'Image URL'),
         _buildTextField(_placeController, 'Place'),
+        _buildTextField(_locationDetailsController, 'Location Details'),
+        _buildTextField(_imageURLController, 'Image URL'),
       ],
       onNext: _nextPage,
     );
@@ -281,16 +280,16 @@ class _AdminMakeEventPageState extends State<AdminMakeEventPage> {
       children: [
         Row(
           children: [
-            Expanded(child: _buildTextField(_startDateController, 'Start Date')),
+            Expanded(child: _buildDateField(_startDateController, 'Start Date')),
             SizedBox(width: 10),
-            Expanded(child: _buildTextField(_startTimeController, 'Start Time')),
+            Expanded(child: _buildTimeField(_startTimeController, 'Start Time')),
           ],
         ),
         Row(
           children: [
-            Expanded(child: _buildTextField(_endDateController, 'End Date')),
+            Expanded(child: _buildDateField(_endDateController, 'End Date')),
             SizedBox(width: 10),
-            Expanded(child: _buildTextField(_endTimeController, 'End Time')),
+            Expanded(child: _buildTimeField(_endTimeController, 'End Time')),
           ],
         ),
       ],
@@ -305,16 +304,16 @@ class _AdminMakeEventPageState extends State<AdminMakeEventPage> {
       children: [
         Row(
           children: [
-            Expanded(child: _buildTextField(_registrationOpenDateController, 'Open Date')),
+            Expanded(child: _buildDateField(_registrationOpenDateController, 'Open Date')),
             SizedBox(width: 10),
-            Expanded(child: _buildTextField(_registrationOpenTimeController, 'Open Time')),
+            Expanded(child: _buildTimeField(_registrationOpenTimeController, 'Open Time')),
           ],
         ),
         Row(
           children: [
-            Expanded(child: _buildTextField(_registrationCloseDateController, 'Close Date')),
+            Expanded(child: _buildDateField(_registrationCloseDateController, 'Close Date')),
             SizedBox(width: 10),
-            Expanded(child: _buildTextField(_registrationCloseTimeController, 'Close Time')),
+            Expanded(child: _buildTimeField(_registrationCloseTimeController, 'Close Time')),
           ],
         ),
         _buildTextField(_numberOfSpotsController, 'Number of Spots', keyboardType: TextInputType.number),
@@ -332,10 +331,18 @@ class _AdminMakeEventPageState extends State<AdminMakeEventPage> {
         _buildTextField(_hostController, 'Host'),
         _buildTextField(_contactEmailController, 'Contact Email'),
         _buildTextField(_contactPhoneController, 'Contact Phone'),
-        _buildTextField(_locationDetailsController, 'Location Details'),
-        _buildTextField(_mapLinkController, 'Map Link'),
-        _buildTextField(_paymentDetailsController, 'Payment Details'),
+      ],
+      onNext: _nextPage,
+      onPrevious: _previousPage,
+    );
+  }
+
+  Widget _buildPaymentDetailsPage() {
+    return _buildPage(
+      title: 'Payment Details',
+      children: [
         _buildTextField(_priceController, 'Price', keyboardType: TextInputType.number),
+        _buildTextField(_paymentDetailsController, 'Payment Details'),
         _buildTextField(_accountNumberController, 'Account Number', keyboardType: TextInputType.number),
       ],
       onNext: _nextPage,
@@ -343,19 +350,12 @@ class _AdminMakeEventPageState extends State<AdminMakeEventPage> {
     );
   }
 
-  Widget _buildEventDetailsPage() {
+  Widget _buildAdditionalInformationPage() {
     return _buildPage(
-      title: 'Event Details',
+      title: 'Additional Information',
       children: [
-        _buildTextField(_typeController, 'Type'),
-        _buildTextField(_categoryController, 'Category'),
         _buildTextField(_cancellationPolicyController, 'Cancellation Policy'),
         _buildTextField(_dressCodeController, 'Dress Code'),
-        _buildTextField(_foodAndDrinksController, 'Food and Drinks'),
-        _buildTextField(_activitiesController, 'Activities'),
-        _buildTextField(_sponsorsController, 'Sponsors'),
-        _buildTextField(_photographerController, 'Photographer'),
-        _buildTextField(_rulesController, 'Rules'),
       ],
       onNext: _nextPage,
       onPrevious: _previousPage,
@@ -381,8 +381,8 @@ class _AdminMakeEventPageState extends State<AdminMakeEventPage> {
                 children: [
                   _buildSummaryTile('Name', _nameController.text),
                   _buildSummaryTile('Description', _descriptionController.text),
-                  _buildSummaryTile('Image URL', _imageController.text),
                   _buildSummaryTile('Place', _placeController.text),
+                  _buildSummaryTile('Location URL', _locationDetailsController.text),
                   _buildSummaryTile('Start Date', _startDateController.text),
                   _buildSummaryTile('Start Time', _startTimeController.text),
                   _buildSummaryTile('End Date', _endDateController.text),
@@ -396,20 +396,12 @@ class _AdminMakeEventPageState extends State<AdminMakeEventPage> {
                   _buildSummaryTile('Host', _hostController.text),
                   _buildSummaryTile('Contact Email', _contactEmailController.text),
                   _buildSummaryTile('Contact Phone', _contactPhoneController.text),
-                  _buildSummaryTile('Location Details', _locationDetailsController.text),
-                  _buildSummaryTile('Map Link', _mapLinkController.text),
+                  _buildSummaryTile('Image URL', _imageURLController.text),
                   _buildSummaryTile('Payment Details', _paymentDetailsController.text),
                   _buildSummaryTile('Price', _priceController.text),
                   _buildSummaryTile('Account Number', _accountNumberController.text),
-                  _buildSummaryTile('Type', _typeController.text),
-                  _buildSummaryTile('Category', _categoryController.text),
                   _buildSummaryTile('Cancellation Policy', _cancellationPolicyController.text),
                   _buildSummaryTile('Dress Code', _dressCodeController.text),
-                  _buildSummaryTile('Food and Drinks', _foodAndDrinksController.text),
-                  _buildSummaryTile('Activities', _activitiesController.text),
-                  _buildSummaryTile('Sponsors', _sponsorsController.text),
-                  _buildSummaryTile('Photographer', _photographerController.text),
-                  _buildSummaryTile('Rules', _rulesController.text),
                 ],
               ),
             ),
@@ -523,6 +515,46 @@ class _AdminMakeEventPageState extends State<AdminMakeEventPage> {
           ),
         ),
         keyboardType: keyboardType,
+      ),
+    );
+  }
+
+  Widget _buildDateField(TextEditingController controller, String labelText) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: GestureDetector(
+        onTap: () => _selectDate(controller),
+        child: AbsorbPointer(
+          child: TextFormField(
+            controller: controller,
+            decoration: InputDecoration(
+              labelText: labelText,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTimeField(TextEditingController controller, String labelText) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: GestureDetector(
+        onTap: () => _selectTime(controller),
+        child: AbsorbPointer(
+          child: TextFormField(
+            controller: controller,
+            decoration: InputDecoration(
+              labelText: labelText,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

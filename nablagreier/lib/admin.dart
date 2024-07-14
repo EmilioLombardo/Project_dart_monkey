@@ -4,6 +4,7 @@ import 'adminUserRequests.dart'; // Import the AdminUserRequestsPage
 import 'adminMakeEvent.dart'; // Import the AdminMakeEventPage
 import 'eventList.dart'; // Import the EventListPage
 import 'adminAddCommittee.dart'; // Import the AdminAddCommitteePage
+import 'adminGroupAdmission.dart'; // Import the AdminGroupAdmissionPage
 
 class AdminPage extends StatefulWidget {
   @override
@@ -18,48 +19,50 @@ class _AdminPageState extends State<AdminPage> {
   ];
 
   final Map<String, List<String>> moduleOptions = {
-  'Administrer Brukere': ['Registreringsforespørsler', 'Option 2', 'Option 3'],
-  'Administrer Arrangement': ['Legg til arrangement', 'Arrangement liste', 'Option 3'],
-  'Administrer Komiteer': ['Legg til komité', 'Rediger Komité', 'Option 3'],
-};
-
-
+    'Administrer Brukere': ['Registreringsforespørsler', 'Option 2', 'Option 3'],
+    'Administrer Arrangement': ['Legg til arrangement', 'Arrangement liste', 'Option 3'],
+    'Administrer Komiteer': ['Legg til komité', 'Rediger Komité', 'Undergruppeopptak'],
+  };
 
   String? _expandedModule;
 
   void _navigateToOption(BuildContext context, String option) {
-  if (option == 'Registreringsforespørsler') {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => AdminUserRequestsPage()),
-    );
-  } else if (option == 'Legg til arrangement') {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => AdminMakeEventPage()),
-    );
-  } else if (option == 'Arrangement liste') {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => EventListPage()),
-    );
-  } else if (option == 'Legg til komité') {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => AdminAddCommitteePage()),
-    );
-  } else if (option == 'Rediger Komité') {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => AdminEditCommitteePage()), // Add the navigation
-    );
-  } else {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text('Clicked on $option'),
-    ));
+    if (option == 'Registreringsforespørsler') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => AdminUserRequestsPage()),
+      );
+    } else if (option == 'Legg til arrangement') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => AdminMakeEventPage()),
+      );
+    } else if (option == 'Arrangement liste') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => EventListPage()),
+      );
+    } else if (option == 'Legg til komité') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => AdminAddCommitteePage()),
+      );
+    } else if (option == 'Rediger Komité') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => AdminEditCommitteePage()), // Add the navigation
+      );
+    } else if (option == 'Undergruppeopptak') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => AdminGroupAdmissionPage()), // Add the navigation
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Clicked on $option'),
+      ));
+    }
   }
-}
-
 
   @override
   Widget build(BuildContext context) {
