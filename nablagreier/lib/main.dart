@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
@@ -10,7 +11,12 @@ import 'login.dart';
 import 'register.dart';
 import 'admin.dart';
 import 'about.dart';
+import 'profilePage.dart'; // Import ProfilePage
 import 'firebase_options.dart';
+import 'eventDetail.dart'; // Import the new event detail page
+import 'adminAddCommittee.dart'; // Import AdminAddCommitteePage
+import 'adminEditCommittee.dart'; // Import AdminEditCommitteePage
+import 'admission.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,6 +48,10 @@ class MyWebPage extends StatelessWidget {
         '/register': (context) => RegisterPage(),
         '/admin': (context) => AdminPage(),
         '/about': (context) => AboutPage(),
+        '/profile': (context) => ProfilePage(userId: FirebaseAuth.instance.currentUser?.uid ?? ''), // Add ProfilePage route
+        '/eventDetail': (context) => EventDetailPage(eventData: ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>),
+        '/adminAddCommittee': (context) => AdminAddCommitteePage(), // Add route for AdminAddCommitteePage
+        '/adminEditCommittee': (context) => AdminEditCommitteePage(), // Add route for AdminEditCommitteePage
       },
     );
   }
@@ -50,12 +60,28 @@ class MyWebPage extends StatelessWidget {
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    final user = FirebaseAuth.instance.currentUser;
+
+    return Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
           StickyHeader(),
           TopImageSection(),
           SliverPadding(padding: EdgeInsets.only(top: 80)),
+          if (user != null)
+            Admission(userId: user.uid) // Pass the userId to Admission widget
+          else
+            SliverToBoxAdapter(
+              child: Center(
+                child: Container(
+                  width: 400,
+                  padding: EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                  ),
+                ),
+              ),
+            ),
           KommendeArrangement(),
           SliverPadding(padding: EdgeInsets.only(top: 80)),
           FlereArrangementer(),

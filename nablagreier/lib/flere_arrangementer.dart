@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'eventDetail.dart'; // Import the event detail page
 
 class FlereArrangementer extends StatelessWidget {
   const FlereArrangementer({Key? key}) : super(key: key);
@@ -8,246 +10,162 @@ class FlereArrangementer extends StatelessWidget {
     return SliverToBoxAdapter(
       child: Center(
         child: Container(
-          width: 1024,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    width: 480,
-                    child: Text(
-                      'Arrangementer',
-                      style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w600, fontSize: 32, color: Colors.white),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  
-                  /*
-                    List over activities
-                  */
-                  SizedBox(height: 24),
+          width: MediaQuery.of(context).size.width * 4 / 5,
+          child: StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance
+                .collection('events')
+                .orderBy('createdAt', descending: true)
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return CircularProgressIndicator();
+              }
+              if (!snapshot.hasData) {
+                return Text('No events found');
+              }
 
-                  Container(
-                    width: 480,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Strikk og drikk',
-                          style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w400 ,fontSize: 20, color: Colors.white),
-                          textAlign: TextAlign.left,
-                        ),
-                        Text(
-                          '01. april',
-                          style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w400 ,fontSize: 20, color: Colors.white),
-                          textAlign: TextAlign.left,
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 4),
-                  Container(
-                    width: 480,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          '',
-                          style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w400 ,fontSize: 16, color: Color(0xFFDBEEFF)),
-                          textAlign: TextAlign.left,
-                        ),
-                        Text(
-                          '',
-                          style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w400 ,fontSize: 16, color: Color(0xFFDBEEFF)),
-                          textAlign: TextAlign.left,
-                        ),
+              List<DocumentSnapshot> documents = snapshot.data!.docs;
+              List<Widget> arrangementer = [];
+              List<Widget> bedpres = [];
 
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 24),
-                  Container(
-                    width: 480,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Programmering og selvservering',
-                          style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w400 ,fontSize: 20, color: Colors.white),
-                          textAlign: TextAlign.left,
-                        ),
-                        Text(
-                          '01. april',
-                          style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w400 ,fontSize: 20, color: Colors.white),
-                          textAlign: TextAlign.left,
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 4),
-                  Container(
-                    width: 480,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Påmelding innen 31.03',
-                          style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w400 ,fontSize: 16, color: Color(0xFFDBEEFF)),
-                          textAlign: TextAlign.left,
-                        ),
-                        Text(
-                          '0/40',
-                          style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w400 ,fontSize: 16, color: Color(0xFFDBEEFF)),
-                          textAlign: TextAlign.left,
-                        ),
+              for (var doc in documents) {
+                var data = doc.data() as Map<String, dynamic>;
+                var eventName = data['name'];
+                var eventDate = data['startDate'];
+                var eventType = data['type'];
+                var registrationCloseDate = data['registrationCloseDate'];
+                var numberOfSpots = data['numberOfSpots'] ?? 'N/A';
+                var participantList = data['participantList'] ?? [];
+                var spotsTaken = participantList.length;
 
+                var eventWidget = GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      '/eventDetail',
+                      arguments: data,
+                    );
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height / 40),
+                    child: Column(
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width * 3 / 8,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                eventName,
+                                style: TextStyle(
+                                  fontFamily: 'Lato',
+                                  fontSize: MediaQuery.of(context).size.width / 60,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white,
+                                ),
+                                textAlign: TextAlign.left,
+                              ),
+                              Text(
+                                eventDate,
+                                style: TextStyle(
+                                  fontFamily: 'Lato',
+                                  fontSize: MediaQuery.of(context).size.width / 70,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white,
+                                ),
+                                textAlign: TextAlign.left,
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: MediaQuery.of(context).size.height / 100),
+                        Container(
+                          width: MediaQuery.of(context).size.width * 3 / 8,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Påmelding innen $registrationCloseDate',
+                                style: TextStyle(
+                                  fontFamily: 'Lato',
+                                  fontSize: MediaQuery.of(context).size.width / 90,
+                                  fontWeight: FontWeight.w500,
+                                  color: Color(0xFFDBEEFF),
+                                ),
+                                textAlign: TextAlign.left,
+                              ),
+                              Text(
+                                '$spotsTaken/$numberOfSpots',
+                                style: TextStyle(
+                                  fontFamily: 'Lato',
+                                  fontSize: MediaQuery.of(context).size.width / 90,
+                                  fontWeight: FontWeight.w500,
+                                  color: Color(0xFFDBEEFF),
+                                ),
+                                textAlign: TextAlign.left,
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
+                  ),
+                );
+
+                if (eventType == 'bedpres') {
+                  bedpres.add(eventWidget);
+                } else {
+                  arrangementer.add(eventWidget);
+                }
+              }
+
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        width: MediaQuery.of(context).size.width * 3 / 8,
+                        child: Text(
+                          'Arrangementer',
+                          style: TextStyle(
+                            fontFamily: 'Satoshi',
+                            fontSize: MediaQuery.of(context).size.width / 40,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      SizedBox(height: MediaQuery.of(context).size.height / 40),
+                      ...arrangementer,
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        width: MediaQuery.of(context).size.width * 3 / 8,
+                        child: Text(
+                          'Bedriftspresentasjoner',
+                          style: TextStyle(
+                            fontFamily: 'Satoshi',
+                            fontSize: MediaQuery.of(context).size.width / 40,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      SizedBox(height: MediaQuery.of(context).size.height / 40),
+                      ...bedpres,
+                    ],
                   ),
                 ],
-                
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    width: 480,
-                    child: Text(
-                      'Bedriftspresentasjoner',
-                      style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w600, fontSize: 32, color: Colors.white),
-                      textAlign: TextAlign.center,
-                    ),
-                    
-                  ),
-
-
-                  /*
-                    List over bed.press.
-                  */
-                  SizedBox(height: 24),
-
-                  Container(
-                    width: 480,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Consultsultensen',
-                          style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w400 ,fontSize: 20, color: Colors.white),
-                          textAlign: TextAlign.left,
-                        ),
-                        Text(
-                          '01. april',
-                          style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w400 ,fontSize: 20, color: Colors.white),
-                          textAlign: TextAlign.left,
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 4),
-                  Container(
-                    width: 480,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Påmelding innen 31.03',
-                          style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w400 ,fontSize: 16, color: Color(0xFFDBEEFF)),
-                          textAlign: TextAlign.left,
-                        ),
-                        Text(
-                          '0/40',
-                          style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w400 ,fontSize: 16, color: Color(0xFFDBEEFF)),
-                          textAlign: TextAlign.left,
-                        ),
-
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 24),
-                  Container(
-                    width: 480,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Conconsulticoncon',
-                          style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w400 ,fontSize: 20, color: Colors.white),
-                          textAlign: TextAlign.left,
-                        ),
-                        Text(
-                          '01. april',
-                          style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w400 ,fontSize: 20, color: Colors.white),
-                          textAlign: TextAlign.left,
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 4),
-                  Container(
-                    width: 480,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Påmelding innen 31.03',
-                          style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w400 ,fontSize: 16, color: Color(0xFFDBEEFF)),
-                          textAlign: TextAlign.left,
-                        ),
-                        Text(
-                          '0/40',
-                          style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w400 ,fontSize: 16, color: Color(0xFFDBEEFF)),
-                          textAlign: TextAlign.left,
-                        ),
-
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 24),
-                  Container(
-                    width: 480,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Sulticonsultsultcon',
-                          style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w400 ,fontSize: 20, color: Colors.white),
-                          textAlign: TextAlign.left,
-                        ),
-                        Text(
-                          '01. april',
-                          style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w400 ,fontSize: 20, color: Colors.white),
-                          textAlign: TextAlign.left,
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 4),
-                  Container(
-                    width: 480,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Påmelding innen 31.03',
-                          style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w400 ,fontSize: 16, color: Color(0xFFDBEEFF)),
-                          textAlign: TextAlign.left,
-                        ),
-                        Text(
-                          '0/40',
-                          style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w400 ,fontSize: 16, color: Color(0xFFDBEEFF)),
-                          textAlign: TextAlign.left,
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 24),
-                ],
-              ),
-            ],
+              );
+            },
           ),
         ),
       ),
