@@ -10,7 +10,7 @@ class FlereArrangementer extends StatelessWidget {
     return SliverToBoxAdapter(
       child: Center(
         child: Container(
-          width: MediaQuery.of(context).size.width * 4 / 5,
+          width: 1024,
           child: StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance
                 .collection('events')
