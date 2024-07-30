@@ -39,7 +39,7 @@ class _AboutPageState extends State<AboutPage> {
           SliverToBoxAdapter(
             child: Container(
               padding: EdgeInsets.fromLTRB(0,40,0,40),
-              color: const Color(0xFF051752),
+              color: const Color(0xFF041262),
               child: Center( 
                 child: Container(
                   height: 260, // 1/5 of the screen width
@@ -51,7 +51,7 @@ class _AboutPageState extends State<AboutPage> {
                         width: 400,
                         child: Text(
                           'Styret',
-                          style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w600, fontSize: 36, color: Colors.white),
+                          style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w600, fontSize: 36, color: Color(0xFF6E90DD)),
                           textAlign: TextAlign.left,
                         ),
                       ),
@@ -142,7 +142,7 @@ class _AboutPageState extends State<AboutPage> {
           SliverToBoxAdapter(
             child: Container(
               padding: EdgeInsets.fromLTRB(0,40,0,40),
-              color: const Color(0xFF051752),
+              color: const Color(0xFF615200),
               child: Center( 
                 child: Container(
                   height: 260, // 1/5 of the screen width
@@ -154,7 +154,7 @@ class _AboutPageState extends State<AboutPage> {
                         width: 400,
                         child: Text(
                           'Tillitsvalgte',
-                          style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w600, fontSize: 36, color: Colors.white),
+                          style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w600, fontSize: 36, color: Color(0xFFF0C433)),
                           textAlign: TextAlign.left,
                         ),
                       ),
@@ -245,7 +245,7 @@ class _AboutPageState extends State<AboutPage> {
           SliverToBoxAdapter(
             child: Container(
               padding: EdgeInsets.fromLTRB(0,40,0,40),
-              color: const Color(0xFF051752),
+              color: const Color(0xFF046225),
               child: Center( 
                 child: Container(
                   height: 260, // 1/5 of the screen width
@@ -257,7 +257,7 @@ class _AboutPageState extends State<AboutPage> {
                         width: 400,
                         child: Text(
                           'Fond',
-                          style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w600, fontSize: 36, color: Colors.white),
+                          style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w600, fontSize: 36, color: Color(0xFF6EDDA6)),
                           textAlign: TextAlign.left,
                         ),
                       ),
@@ -319,6 +319,58 @@ class _AboutPageState extends State<AboutPage> {
                           'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
                           style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w300, fontSize: 18, color: Colors.white),
                           textAlign: TextAlign.center,
+                        ),
+                      ),
+                      SizedBox(height: 100),
+                      SizedBox(
+                        width: 400,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            TextButton(                      
+                              onPressed: () {
+                                // Handle Les mer
+                              },
+                              child: const Text(
+                                'Les mer',
+                                style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w400 ,fontSize: 16, color: Color(0xFFFFFFFF)),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )
+          ),
+          SliverToBoxAdapter(
+            child: Container(
+              padding: EdgeInsets.fromLTRB(0,40,0,40),
+              color: const Color(0xFF620441),
+              child: Center( 
+                child: Container(
+                  height: 260, // 1/5 of the screen width
+                  width: 1000,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                      SizedBox(
+                        width: 400,
+                        child: Text(
+                          'En ting til',
+                          style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w600, fontSize: 36, color: Color(0xFFDF77AB)),
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      SizedBox(
+                        width: 400,
+                        child: Text(
+                          'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+                          style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w300, fontSize: 18, color: Colors.white),
+                          textAlign: TextAlign.left,
                         ),
                       ),
                       SizedBox(height: 100),

@@ -6,15 +6,30 @@ Nablå #1045A6
 Header
 Footer
 
-Nablå lite ##DBEEFF
-Bakgrunnen
-Header tekst
+Lightmode:
+primaryBackgroundColor #FFFFFF
+primaryTextColor: #061025
+secondaryBackgroundColor: #DBEEFF
+secondaryTextColor: #051752
+greenBackgroundColor: #6EDDA6
+greenTextColor: #046225
+pinkBackgroundColor: #DF77AB
+pinkTextColor:#620441
+goldBackgroundColor:#F0C433
+goldTextColor:#615200
+blueBackgroundColor:#6E90DD
+blueTextColor:#041262
 
-Forgrunnshvit #FFFFFF
-Forgrunn
-Logo
-
-Nablå skygge #051752
-
-Darkmode #061025
-Bakgrunnen
+Darkmode:
+primaryBackgroundColor: #061025
+primaryTextColor: #FFFFFF
+secondaryBackgroundColor: #051752
+secondaryTextColor: #DBEEFF
+greenBackgroundColor: #046225
+greenTextColor: #6EDDA6
+pinkBackgroundColor:#620441
+pinkTextColor: #DF77AB
+goldBackgroundColor:#615200
+goldTextColor:#F0C433
+blueBackgroundColor:#041262
+blueTextColor:#6E90DD
