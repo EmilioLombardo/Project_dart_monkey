@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'theme_provider.dart';
 
 class StickyHeader extends StatefulWidget {
@@ -11,6 +12,221 @@ class StickyHeader extends StatefulWidget {
 }
 
 class _StickyHeaderState extends State<StickyHeader> {
+  bool _isSearching = false; // Track whether the search dialog is visible
+  bool _searchingUsers = false; // Track whether "søk brukere" is active
+  bool _searchingCommittees = false; // Track whether "søk komiteer" is active
+  bool _searchingEvents = false; // Track whether "søk arrangement" is active
+  final TextEditingController _searchController = TextEditingController();
+  List<DocumentSnapshot> _searchResults = []; // Store search results
+
+  void _showSearchDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return Dialog(
+              backgroundColor: Colors.black.withOpacity(0.75),
+              child: Container(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Show instruction text
+                    if (!_searchingUsers && !_searchingCommittees && !_searchingEvents)
+                      const Padding(
+                        padding: EdgeInsets.only(bottom: 20.0),
+                        child: Text(
+                          'Velg hva du vil søke etter',
+                          style: TextStyle(color: Colors.white70, fontSize: 16),
+                        ),
+                      ),
+                    // Only show the search bar if a category is selected
+                    if (_searchingUsers || _searchingCommittees || _searchingEvents)
+                      TextField(
+                        controller: _searchController,
+                        autofocus: true,
+                        decoration: InputDecoration(
+                          hintText: _searchingUsers
+                              ? 'søk brukere'
+                              : _searchingCommittees
+                                  ? 'søk komiteer'
+                                  : _searchingEvents
+                                      ? 'søk arrangement'
+                                      : '',
+                          hintStyle: const TextStyle(color: Colors.white70),
+                          prefixIcon: const Icon(Icons.search, color: Colors.white70),
+                          filled: true,
+                          fillColor: Colors.black.withOpacity(0.1),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            borderSide: BorderSide.none,
+                          ),
+                        ),
+                        style: const TextStyle(color: Colors.white),
+                        onChanged: (query) {
+                          if (query.isEmpty) {
+                            setState(() {
+                              _searchResults.clear(); // Clear search results
+                            });
+                          } else {
+                            if (_searchingUsers) {
+                              _searchUsers(query, setState);
+                            } else if (_searchingCommittees) {
+                              _searchCommittees(query, setState);
+                            } else if (_searchingEvents) {
+                              _searchEvents(query, setState);
+                            }
+                          }
+                        },
+                      ),
+                    const SizedBox(height: 20),
+                    _searchResults.isEmpty
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              _buildIconBox(Icons.account_circle, 'søk brukere', setState),
+                              _buildIconBox(Icons.group, 'søk komiteer', setState),
+                              _buildIconBox(Icons.event, 'søk arrangement', setState),
+                            ],
+                          )
+                        : _buildSearchResults(),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Widget _buildIconBox(IconData? icon, String label, Function setState) {
+    return InkWell(
+      onTap: () {
+        setState(() {
+          if (icon == Icons.account_circle) {
+            _searchingUsers = true;
+            _searchingCommittees = false;
+            _searchingEvents = false;
+          } else if (icon == Icons.group) {
+            _searchingCommittees = true;
+            _searchingUsers = false;
+            _searchingEvents = false;
+          } else if (icon == Icons.event) {
+            _searchingEvents = true;
+            _searchingUsers = false;
+            _searchingCommittees = false;
+          }
+        });
+      },
+      child: Column(
+        children: [
+          Container(
+            width: 60,
+            height: 60,
+            decoration: BoxDecoration(
+              color: Colors.blueAccent,
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+            child: icon != null
+                ? Icon(icon, size: 40, color: Colors.white)
+                : null,
+          ),
+          if (label.isNotEmpty) ...[
+            const SizedBox(height: 5),
+            Text(
+              label,
+              style: const TextStyle(color: Colors.white, fontSize: 12),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSearchResults() {
+    return Column(
+      children: _searchResults.map((doc) {
+        return ListTile(
+          title: Text(
+            doc['name'], // Display the event, committee, or user's name
+            style: const TextStyle(color: Colors.white),
+          ),
+          subtitle: _searchingUsers
+              ? Text(
+                  doc['username'], // Display the user's username
+                  style: const TextStyle(color: Colors.white70),
+                )
+              : _searchingCommittees
+                  ? Text(
+                      "Members: ${doc['activeMembers'].length} active", // Display the number of active members in the committee
+                      style: const TextStyle(color: Colors.white70),
+                    )
+                  : null, // No subtitle for events
+          onTap: () {
+            // Define what happens when a search result is clicked
+          },
+        );
+      }).toList(),
+    );
+  }
+
+  Future<void> _searchUsers(String query, Function setState) async {
+    String lowerCaseQuery = query.toLowerCase();
+
+    final results = await FirebaseFirestore.instance
+        .collection('activeUsers')
+        .get();
+
+    final filteredResults = results.docs.where((doc) {
+      final name = doc['name'].toString().toLowerCase();
+      final lastName = doc['lastName'].toString().toLowerCase();
+      final username = doc['username'].toString().toLowerCase();
+      return name.contains(lowerCaseQuery) ||
+          lastName.contains(lowerCaseQuery) ||
+          username.contains(lowerCaseQuery);
+    }).toList();
+
+    setState(() {
+      _searchResults = filteredResults;
+    });
+  }
+
+  Future<void> _searchCommittees(String query, Function setState) async {
+    String lowerCaseQuery = query.toLowerCase();
+
+    final results = await FirebaseFirestore.instance
+        .collection('komiteer')
+        .get();
+
+    final filteredResults = results.docs.where((doc) {
+      final name = doc['name'].toString().toLowerCase();
+      return name.contains(lowerCaseQuery);
+    }).toList();
+
+    setState(() {
+      _searchResults = filteredResults;
+    });
+  }
+
+  Future<void> _searchEvents(String query, Function setState) async {
+    String lowerCaseQuery = query.toLowerCase();
+
+    final results = await FirebaseFirestore.instance
+        .collection('events')
+        .get();
+
+    final filteredResults = results.docs.where((doc) {
+      final name = doc['name'].toString().toLowerCase();
+      return name.contains(lowerCaseQuery);
+    }).toList();
+
+    setState(() {
+      _searchResults = filteredResults;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
@@ -74,7 +290,6 @@ class _StickyHeaderState extends State<StickyHeader> {
                       child: const Text(
                         'Admin',
                         style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w300 ,fontSize: 18, color: Colors.white),
-
                       ),
                     ),
                     const SizedBox(width: 30),
@@ -89,6 +304,11 @@ class _StickyHeaderState extends State<StickyHeader> {
                         themeProvider.toggleTheme(!themeProvider.isDarkMode);
                       }
                     },
+                  ),
+                  const SizedBox(width: 15),
+                  IconButton(
+                    icon: const Icon(Icons.search, color: Colors.white),
+                    onPressed: _showSearchDialog,
                   ),
                   const SizedBox(width: 15),
                   if (user != null) ...[
