@@ -24,6 +24,7 @@ class _AdminAddCommitteePageState extends State<AdminAddCommitteePage> {
         'email': _emailController.text,
         'activeMembers': {},
         'unactiveMembers': {},
+        'rights': [], // Initialize the rights field as an empty array
       });
 
       ScaffoldMessenger.of(context).showSnackBar(

@@ -5,6 +5,11 @@ import 'adminMakeEvent.dart'; // Import the AdminMakeEventPage
 import 'eventList.dart'; // Import the EventListPage
 import 'adminAddCommittee.dart'; // Import the AdminAddCommitteePage
 import 'adminGroupAdmission.dart'; // Import the AdminGroupAdmissionPage
+import 'adminActiveUsers.dart'; // Import the AdminActiveUsersPage
+import 'adminAddAdminGroup.dart'; // Import the AdminAddAdminGroupPage
+import 'adminEditAdminGroup.dart'; // Import the AdminEditAdminGroupPage
+import 'adminEditRights.dart'; // Import the AdminEditRightsPage
+import 'adminKullGroups.dart'; // Import the AdminKullGroupsPage
 
 class AdminPage extends StatefulWidget {
   @override
@@ -16,12 +21,14 @@ class _AdminPageState extends State<AdminPage> {
     'Administrer Brukere', // Custom name for the first module
     'Administrer Arrangement',
     'Administrer Komiteer',
+    'Admin Tilganger', // New module name
   ];
 
   final Map<String, List<String>> moduleOptions = {
-    'Administrer Brukere': ['Registreringsforespørsler', 'Option 2', 'Option 3'],
+    'Administrer Brukere': ['Registreringsforespørsler', 'Aktive Brukere', 'Kullgrupper'],
     'Administrer Arrangement': ['Legg til arrangement', 'Arrangement liste', 'Option 3'],
     'Administrer Komiteer': ['Legg til komité', 'Rediger Komité', 'Undergruppeopptak'],
+    'Admin Tilganger': ['Adminstrer tilganger', 'Legg til egendefinert gruppe', 'Rediger rettigheter'], // Renamed options
   };
 
   String? _expandedModule;
@@ -31,6 +38,16 @@ class _AdminPageState extends State<AdminPage> {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => AdminUserRequestsPage()),
+      );
+    } else if (option == 'Aktive Brukere') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => AdminActiveUsersPage()), // Navigate to AdminActiveUsersPage
+      );
+    } else if (option == 'Kullgrupper') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => AdminKullGroupsPage()), // Navigate to AdminKullGroupsPage
       );
     } else if (option == 'Legg til arrangement') {
       Navigator.push(
@@ -56,6 +73,21 @@ class _AdminPageState extends State<AdminPage> {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => AdminGroupAdmissionPage()), // Add the navigation
+      );
+    } else if (option == 'Adminstrer tilganger') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => AdminEditAdminGroupPage()), // Add the navigation for AdminEditAdminGroupPage
+      );
+    } else if (option == 'Legg til egendefinert gruppe') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => AdminAddAdminGroupPage()), // Add the navigation for AdminAddAdminGroupPage
+      );
+    } else if (option == 'Rediger rettigheter') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => AdminEditRightsPage()), // Add the navigation for AdminEditRightsPage
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(

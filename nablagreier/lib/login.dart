@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -33,7 +34,9 @@ class _LoginPageState extends State<LoginPage> {
           ));
           await FirebaseAuth.instance.signOut();
         } else {
-          // User status is true, proceed to home page
+          // User status is true, proceed to cache rights and navigate to home page
+          await _cacheUserRights(userCredential.user!.uid);
+          
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             content: Text('Login successful'),
           ));
@@ -45,6 +48,23 @@ class _LoginPageState extends State<LoginPage> {
           content: Text('Failed to login: ${e.message}'),
         ));
       }
+    }
+  }
+
+  Future<void> _cacheUserRights(String userId) async {
+    try {
+      // Fetch user data from Firestore
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('activeUsers').doc(userId).get();
+
+      if (userDoc.exists) {
+        List<String> adminAccesses = List<String>.from(userDoc['adminAccess'] ?? []);
+
+        // Store rights in SharedPreferences
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setStringList('adminAccesses', adminAccesses);
+      }
+    } catch (e) {
+      print('Error fetching user rights: $e');
     }
   }
 
