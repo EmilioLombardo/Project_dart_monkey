@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'theme_provider.dart';
+import 'viewOthersProfilePage.dart';
+import 'eventDetail.dart';
 
 class StickyHeader extends StatefulWidget {
   const StickyHeader({Key? key}) : super(key: key);
@@ -12,12 +14,12 @@ class StickyHeader extends StatefulWidget {
 }
 
 class _StickyHeaderState extends State<StickyHeader> {
-  bool _isSearching = false; // Track whether the search dialog is visible
-  bool _searchingUsers = false; // Track whether "søk brukere" is active
-  bool _searchingCommittees = false; // Track whether "søk komiteer" is active
-  bool _searchingEvents = false; // Track whether "søk arrangement" is active
+  bool _isSearching = false;
+  bool _searchingUsers = false;
+  bool _searchingCommittees = false;
+  bool _searchingEvents = false;
   final TextEditingController _searchController = TextEditingController();
-  List<DocumentSnapshot> _searchResults = []; // Store search results
+  List<DocumentSnapshot> _searchResults = [];
 
   void _showSearchDialog() {
     showDialog(
@@ -32,7 +34,6 @@ class _StickyHeaderState extends State<StickyHeader> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // Show instruction text
                     if (!_searchingUsers && !_searchingCommittees && !_searchingEvents)
                       const Padding(
                         padding: EdgeInsets.only(bottom: 20.0),
@@ -41,7 +42,6 @@ class _StickyHeaderState extends State<StickyHeader> {
                           style: TextStyle(color: Colors.white70, fontSize: 16),
                         ),
                       ),
-                    // Only show the search bar if a category is selected
                     if (_searchingUsers || _searchingCommittees || _searchingEvents)
                       TextField(
                         controller: _searchController,
@@ -67,7 +67,7 @@ class _StickyHeaderState extends State<StickyHeader> {
                         onChanged: (query) {
                           if (query.isEmpty) {
                             setState(() {
-                              _searchResults.clear(); // Clear search results
+                              _searchResults.clear();
                             });
                           } else {
                             if (_searchingUsers) {
@@ -150,22 +150,37 @@ class _StickyHeaderState extends State<StickyHeader> {
       children: _searchResults.map((doc) {
         return ListTile(
           title: Text(
-            doc['name'], // Display the event, committee, or user's name
+            doc['name'],
             style: const TextStyle(color: Colors.white),
           ),
           subtitle: _searchingUsers
               ? Text(
-                  doc['username'], // Display the user's username
+                  doc['username'],
                   style: const TextStyle(color: Colors.white70),
                 )
               : _searchingCommittees
                   ? Text(
-                      "Members: ${doc['activeMembers'].length} active", // Display the number of active members in the committee
+                      "Members: ${doc['activeMembers'].length} active",
                       style: const TextStyle(color: Colors.white70),
                     )
-                  : null, // No subtitle for events
+                  : null,
           onTap: () {
-            // Define what happens when a search result is clicked
+            if (_searchingUsers) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ViewOthersProfilePage(userId: doc.id),
+                ),
+              );
+            } else if (_searchingCommittees) {
+            } else if (_searchingEvents) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => EventDetailPage(eventData: doc.data() as Map<String, dynamic>),
+                ),
+              );
+            }
           },
         );
       }).toList(),
@@ -250,7 +265,7 @@ class _StickyHeaderState extends State<StickyHeader> {
                 children: [
                   InkWell(
                     onTap: () {
-                      Navigator.pushNamed(context, '/about'); // Navigate to about page
+                      Navigator.pushNamed(context, '/about');
                     },
                     child: const Text(
                       'Om Nabla',
@@ -285,7 +300,7 @@ class _StickyHeaderState extends State<StickyHeader> {
                   if (user != null) ...[
                     InkWell(
                       onTap: () {
-                        Navigator.pushNamed(context, '/admin'); // Navigate to admin page
+                        Navigator.pushNamed(context, '/admin');
                       },
                       child: const Text(
                         'Admin',
@@ -314,7 +329,7 @@ class _StickyHeaderState extends State<StickyHeader> {
                   if (user != null) ...[
                     InkWell(
                       onTap: () {
-                        Navigator.pushNamed(context, '/profile'); // Navigate to profile page
+                        Navigator.pushNamed(context, '/profile');
                       },
                       child: const Icon(Icons.account_circle, size: 30.0, color: Colors.white),
                     ),
@@ -325,7 +340,7 @@ class _StickyHeaderState extends State<StickyHeader> {
                         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                           content: Text('Logged out successfully'),
                         ));
-                        Navigator.pushReplacementNamed(context, '/'); // Refresh the page
+                        Navigator.pushReplacementNamed(context, '/');
                       },
                       child: const Text(
                         'Logg ut',
