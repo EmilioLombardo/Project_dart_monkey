@@ -4,25 +4,118 @@ abbr.
 for forrige side= ..
 antall / indikerer hvor dypt man er i lenka
 * er unntak
+- er innhold som finnes på siden
+for engelsk side settes /en/ inn først i tilleggene, eventuelt vurdere rene engelske lenker
 
-
-nye:
+header:
 ../om/
-    /../styret/
-    /../stillingsbeskrivelser/
-    /../undergrupper/
-        *nabla.no/soknad/
-    /../tillitsvalgte/
+    /../nabla/                                            (om oss, kort forklart)
+        -styret (kort) -> /for-studenter/styret/ og [link til SKE]
+        -arrangementer -> /for-studenter/arrangementer/
+        -arealer som administreres av Nabla
+        -undergrupper
+            -komiteer -> /for-studenter/komiteer/
+            -interessegrupper -> /for-studenter/interessegrupper/
+            -idrettslag -> /for-studenter/idrettslag/
+        
+    /../stillingsbeskrivelser/                            (styrestillinger)
     /../lover-og-forskrifter/
     /../fond/
-    /../kompendier/
-../arrangementer/
-    *kalender har lik som opprinnelse
-    *lister har lik som opprinnelse
-    *legg til arrangement har lik som opprinnelse
-../for-bedrifter/
-../ny-student/
-../profil/
+    /../retningslinjer/
+    /../tillitsvalgte/
+    /../forretningsorden/
 
-gamle vi må huske å få med:
-../stillinger/              #ledige stillinger
+../for-studenter/                                         (komponenter?)
+    /../styret/
+        -sittende styre med bilder
+        -ulike stillinger -> /for-studenter/stillingsbeskrivelser/ 
+    /../komiteer/
+        -alle komiteer med tilhørende lenker, f.eks /ol/ for ølbryggerlauget
+        *nabla.no/soknad/
+    /../interessegrupper/
+        -alle interessegrupper med tilhørende lenker
+        *nabla.no/soknad/
+
+    /../utlegg/
+    /../okonomisk-stotte/                                  (til arrangement eller grupper) 
+    
+    /../arrangementer/
+        *kalender har lik som opprinnelse
+        *lister har lik som opprinnelse
+        *legg til arrangement har lik som opprinnelse
+    /../stillingsannonser/
+    
+    /../møtereferater/
+    /../varsling/
+        -tillitsvalgte -> /om/tillitsvalgte/ (for ITV, PTV, KTV og FTV, info om studentdemokratiet)
+        -varslingsskjemaer
+
+    /../innlegg/                                         (ny blogg redaksjonen kan stå for?)
+    /../faglig-innhold/
+        /../../videoer/                                     (eller youtube)
+        /../../kompendier/
+    /../kjelleren/ -> (sendes videre til egen side? holder meny, arrangementer, booking og "om oss")
+    
+    /../kontakt/
+        -mails til styret
+        -mails til undergrupper
+?    /../bokskap/
+    /../diverse/
+        */om/utleie/
+        */om/rombooking/
+        */om/kontortider/
+        *nabla.no/SKE/
+        
+
+
+../for-bedrifter/
+    /../bedriftspresentasjon/
+        -hvordan ser en bed.pres. ut
+        -litt som studieretningene
+        -hva bør være med i søknaden?
+        -hva bedkom kan bistå med
+        *lenke til søknadsskjema
+    /../kurs/                                             (heter Kurs/Case)
+        -hvordan ser et kurs ut
+        -litt som studieretningene
+        -hva bør være med i søknaden?
+        -hva bedkom kan bistå med
+        *lenke til søknadsskjema
+    /../stillingsannonse/
+        -hva bør være med i søknaden?
+        *lenke til søknadsskjema
+    /../bedriftsbesøk/
+        -hvordan ser et bedriftsbesøk ut
+        -litt som studieretningene
+        -hva bør være med i søknaden?
+        -hva bedkom kan bistå med
+        *lenke til søknadsskjema
+    /../eureka/
+        -hva er Eurêka?
+        -hva bedkom kan bistå med
+        *lenke til søknadsskjema
+    /../screeningintervju/
+        -hva er screeningintervju?
+        -litt som studieretningene
+        -hva bør være med i søknaden?
+        -hva bedkom kan bistå med
+        *lenke til søknadsskjema
+
+../julekalender/ (erstatter ny-student i juletider)
+../ny-student/
+    -registrering i linjeforeningen
+    -registrering fadderperioden
+    -lurt å kunne på NTNU (fysikkland, tilgangskort, mazemap)
+    -lurt å kunne om linjeforeningen (søknadsfrister, SKE)
+    -viktige linker på nettsiden (bokskap)
+../sok/
+../profil/
+../admin/
+
+
+
+på forside:
+../for-studenter/arrangementer/
+../nabladet/
+../skraattcast/
+../tilbakemelding/

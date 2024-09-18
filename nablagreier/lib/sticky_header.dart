@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'theme_provider.dart';
 import 'viewOthersProfilePage.dart';
 import 'eventDetail.dart';
+import '_globals.dart';
 
 class StickyHeader extends StatefulWidget {
   const StickyHeader({Key? key}) : super(key: key);
@@ -247,108 +248,135 @@ class _StickyHeaderState extends State<StickyHeader> {
     final themeProvider = Provider.of<ThemeProvider>(context);
     final isSystemDarkMode = MediaQuery.of(context).platformBrightness == Brightness.dark;
     final iconData = (themeProvider.themeMode == ThemeMode.system ? isSystemDarkMode : themeProvider.isDarkMode) ? Icons.light_mode : Icons.dark_mode;
-
     return SliverPersistentHeader(
       delegate: _StickyHeaderDelegate(
         minHeight: 60.0,
         maxHeight: 60.0,
         child: Container(
-          color: const Color(0xFF1045A6),
-          padding: const EdgeInsets.only(right: 16.0),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [
+                NablaColor.nablaBlue,
+                NablaColor.nablaBlue,
+              ],
+            )
+          ),
+          padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 0),
           alignment: Alignment.centerRight,
           child: StreamBuilder<User?>(
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (context, snapshot) {
               final User? user = snapshot.data;
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.pushNamed(context, '/about');
-                    },
-                    child: const Text(
-                      'Om Nabla',
-                      style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w300, fontSize: 18, color: Colors.white),
-                    ),
-                  ),
-                  const SizedBox(width: 30),
-                  InkWell(
-                    onTap: () {},
-                    child: const Text(
-                      'Arrangementer',
-                      style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w300 ,fontSize: 18, color: Colors.white),
-                    ),
-                  ),
-                  const SizedBox(width: 30),
-                  InkWell(
-                    onTap: () {},
-                    child: const Text(
-                      'For bedrifter',
-                      style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w300 ,fontSize: 18, color: Colors.white),
-                    ),
-                  ),
-                  const SizedBox(width: 30),
-                  InkWell(
-                    onTap: () {},
-                    child: const Text(
-                      'Ny student?',
-                      style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w300 ,fontSize: 18, color: Colors.white),
-                    ),
-                  ),
-                  const SizedBox(width: 30),
-                  if (user != null) ...[
-                    InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, '/admin');
-                      },
-                      child: const Text(
-                        'Admin',
-                        style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w300 ,fontSize: 18, color: Colors.white),
+              return Container(
+                  child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                      Container(
+                        height: 40,
+                        width: 40,                        
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('assets/images/Grafisk_logo_vector_hvit.png'), // Background image
+                            fit: BoxFit.cover,
+                            colorFilter: ColorFilter.mode(NablaColor.nablaGold, BlendMode.srcATop)
+                          ),
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 30),
-                  ],
-                  IconButton(
-                    icon: Icon(iconData),
-                    color: Colors.white,
-                    onPressed: () {
-                      if (themeProvider.themeMode == ThemeMode.system) {
-                        themeProvider.toggleTheme(!isSystemDarkMode);
-                      } else {
-                        themeProvider.toggleTheme(!themeProvider.isDarkMode);
-                      }
-                    },
-                  ),
-                  const SizedBox(width: 15),
-                  IconButton(
-                    icon: const Icon(Icons.search, color: Colors.white),
-                    onPressed: _showSearchDialog,
-                  ),
-                  const SizedBox(width: 15),
-                  if (user != null) ...[
-                    InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, '/profile');
-                      },
-                      child: const Icon(Icons.account_circle, size: 30.0, color: Colors.white),
-                    ),
-                    const SizedBox(width: 15),
-                    InkWell(
-                      onTap: () async {
-                        await FirebaseAuth.instance.signOut();
-                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                          content: Text('Logged out successfully'),
-                        ));
-                        Navigator.pushReplacementNamed(context, '/');
-                      },
-                      child: const Text(
-                        'Logg ut',
-                        style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w400 ,fontSize: 14, color: Colors.white),
-                      ),
-                    ),
-                  ],
-                ],
+                      Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(context, '/about');
+                          },
+                          child: Text(
+                            'Om Nabla',
+                            style: NablaText.headerHeader(NablaColor.white),
+                          ),
+                        ),
+                        const SizedBox(width: 30),
+                        InkWell(
+                          onTap: () {},
+                          child: Text(
+                            'Arrangementer',
+                            style: NablaText.headerHeader(NablaColor.white),
+                          ),
+                        ),
+                        const SizedBox(width: 30),
+                        InkWell(
+                          onTap: () {},
+                          child: Text(
+                            'For bedrifter',
+                            style: NablaText.headerHeader(NablaColor.white),
+                          ),
+                        ),
+                        const SizedBox(width: 30),
+                        InkWell(
+                          onTap: () {},
+                          child: Text(
+                            'Ny student?',
+                            style: NablaText.headerHeader(NablaColor.white),
+                          ),
+                        ),
+                        const SizedBox(width: 30),
+                        if (user != null) ...[
+                          InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(context, '/admin');
+                            },
+                            child: Text(
+                              'Admin',
+                              style: NablaText.headerHeader(NablaColor.white),
+                            ),
+                          ),
+                          const SizedBox(width: 30),
+                        ],
+                        IconButton(
+                          icon: Icon(iconData),
+                          color: Colors.white,
+                          onPressed: () {
+                            if (themeProvider.themeMode == ThemeMode.system) {
+                              themeProvider.toggleTheme(!isSystemDarkMode);
+                            } else {
+                              themeProvider.toggleTheme(!themeProvider.isDarkMode);
+                            }
+                          },
+                        ),
+                        const SizedBox(width: 15),
+                        IconButton(
+                          icon: Icon(Icons.search, color: NablaColor.white),
+                          onPressed: _showSearchDialog,
+                        ),                      
+                        if (user != null) ...[
+                          const SizedBox(width: 15),
+                          InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(context, '/profile');
+                            },
+                            child: Icon(Icons.account_circle, size: 30.0, color: NablaColor.white),
+                          ),
+                          const SizedBox(width: 15),
+                          InkWell(
+                            onTap: () async {
+                              await FirebaseAuth.instance.signOut();
+                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                content: Text('Logged out successfully'),
+                              ));
+                              Navigator.pushReplacementNamed(context, '/');
+                            },
+                            child: Text(
+                              'Logg ut',
+                              style: NablaText.tinyHeader(NablaColor.white),
+                            ),
+                          ),
+                        ],
+                      ],
+                    )
+                  ]
+                )
               );
             },
           ),

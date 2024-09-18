@@ -10,7 +10,7 @@ Lightmode:
 primaryBackgroundColor #FFFFFF
 primaryTextColor: #061025
 secondaryBackgroundColor: #DBEEFF
-secondaryTextColor: #051752
+secondaryTextColor: #062179
 greenBackgroundColor: #6EDDA6
 greenTextColor: #046225
 pinkBackgroundColor: #DF77AB
@@ -23,7 +23,7 @@ blueTextColor:#041262
 Darkmode:
 primaryBackgroundColor: #061025
 primaryTextColor: #FFFFFF
-secondaryBackgroundColor: #051752
+secondaryBackgroundColor: #062179
 secondaryTextColor: #DBEEFF
 greenBackgroundColor: #046225
 greenTextColor: #6EDDA6
